@@ -1,3 +1,4 @@
+// 主页面
 import 'reflect-metadata'
 import { container } from 'tsyringe'
 import React from 'react'
@@ -36,7 +37,7 @@ import {
 import { IWorkbench } from '@dtinsight/molecule/esm/model/workbench'
 import { Display, Pane, SplitPane } from '@dtinsight/molecule/esm/components'
 
-import { MySidePane } from './mySidePane'
+import { MySidePane } from './blockchainSidePane'
 
 const mainBenchClassName = prefixClaName('mainBench')
 const workbenchClassName = prefixClaName('workbench')

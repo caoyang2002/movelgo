@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  margin: 0;
+}
+/* 编辑器中的 Logo */
+.logo{
+  display:none;
+}

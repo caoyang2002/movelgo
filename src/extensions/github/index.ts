@@ -17,7 +17,8 @@ export const GoToGithubExtension: IExtension = {
 
         molecule.activityBar.onClick((id) => {
             if (id === GoToGithubExtensionID) {
-                window.open('https://github.com/DTStack/molecule-examples')
+                window.open('https://github.com/caouyang2002/moveelgo')
+
             }
         })
     },

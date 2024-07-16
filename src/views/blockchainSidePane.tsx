@@ -1,3 +1,4 @@
+// 右侧区块链面板 UI
 import React from 'react'
 import molecule from '@dtinsight/molecule'
 import { Header, Content } from '@dtinsight/molecule/esm/workbench/sidebar'
@@ -7,11 +8,11 @@ import { ISidebarPane } from '@dtinsight/molecule/esm/model'
 
 const Toolbar = molecule.component.Toolbar
 
-export function MySidePaneView() {
+export function BlockchainSidePaneView() {
   const renderHeaderToolbar = React.useCallback((): IActionBarItemProps[] => {
     return [
       {
-        icon: 'arrow-both',
+        icon: 'menu',
         id: 'tools',
         title: 'Aptos',
       },
@@ -26,7 +27,7 @@ export function MySidePaneView() {
       />
       <Content>
         <p style={{ textAlign: 'center' }}>Move on Aptos</p>
-        <h1 className=''>Gas</h1>
+        <h1 className="">Gas</h1>
       </Content>
     </div>
   )
@@ -37,6 +38,6 @@ export const MySidePane: ISidebarPane = {
   // title: 'Tools',
   title: 'Move',
   render: () => {
-    return <MySidePaneView />
+    return <BlockchainSidePaneView />
   },
 }

@@ -10,6 +10,7 @@ import { SettingsExtension } from './settings';
 import { MenuBarExtension } from './menubar/index';
 import { ActionExtension } from './action';
 import { GoToGithubExtension } from './github';
+import { AccountExtension } from './account';
 
 const extensions: IExtension[] = [
     new FirstExtension(),
@@ -20,6 +21,7 @@ const extensions: IExtension[] = [
     new SettingsExtension(),
     new MenuBarExtension(),
     new ActionExtension(),
+    new AccountExtension(),
     GoToGithubExtension,
     OneDarkPro,
     ExtendLocales,
