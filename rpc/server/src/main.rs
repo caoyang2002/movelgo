@@ -44,7 +44,7 @@ async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
     }
 
     // 编译 Move 代码
-    println("[开始编译] {}",move_file)
+    println!("[开始编译] {}",move_file);
     let compile_output = Command::new("aptos")
     .arg("move")
     .arg("test")
