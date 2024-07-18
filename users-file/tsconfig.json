@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS", // 确保使用 CommonJS 模块
+    "esModuleInterop": true,
+    "target": "ESNext"
+  }
+}
