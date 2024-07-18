@@ -10,7 +10,6 @@ const PORT = 3001
 
 // 指定用户文件夹的存储目录
 const usersBaseDir = path.join(__dirname, './users')
-const usersUrlBase = '/users' // URL 中的基础路径
 
 // 设置允许跨域请求的选项
 const corsOptions = {
@@ -140,23 +139,28 @@ app.post(
     console.log('[检查] 文件路径是否包含斜杠：', containsSlash)
     // 创建单个文件
     if (!containsSlash) {
-      // 需要创建的文件路径
-      console.log('[操作] 创建文件：', filePath)
-      const folderPath = path.join(usersBaseDir, req.folderName)
-      const fileFullPath = path.join(folderPath, filePath)
-      console.log('[检查] 创建的文件路径：', fileFullPath)
-      if (!fs.existsSync(fileFullPath)) {
-        try {
+      try {
+        // 需要创建的文件路径
+        console.log('[操作] 创建文件：', filePath)
+        const folderPath = path.join(usersBaseDir, req.folderName)
+        const fileFullPath = path.join(folderPath, filePath)
+        console.log('[检查] 创建的文件路径：', fileFullPath)
+        if (!fs.existsSync(fileFullPath)) {
           fs.writeFileSync(fileFullPath, '') // 创建空文件
           res.json({
             message: 'File created',
             filePath: req.folderName.toString() + '/' + filePath.toString(),
           })
-        } catch (error) {
-          res
-            .status(500)
-            .json({ message: 'Error creating file', error: error.message })
+        } else {
+          res.json({
+            message: 'File already exists',
+            filePath: req.folderName.toString() + '/' + filePath.toString(),
+          })
         }
+      } catch (error) {
+        res
+          .status(500)
+          .json({ message: 'Error creating file', error: error.message })
       }
       return
     }
