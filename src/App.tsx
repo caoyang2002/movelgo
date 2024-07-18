@@ -5,7 +5,7 @@ import { create, Workbench } from '@dtinsight/molecule'
 import '@dtinsight/molecule/esm/style/mo.css'
 
 import extensions from './extensions'
-import MyWorkbench from './views/myWorkbench'
+import MyWorkbench from './views/Workbench'
 // import './App.css'
 ;(window as any).__DEVELOPMENT__ = false
 

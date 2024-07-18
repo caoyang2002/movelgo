@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash';
 import API from '../../api';
 import { STATUS_BAR_LANGUAGE } from './base';
 
+// 初始化
 export async function initFolderTree () {
     const res = await API.getFolderTree();
     if (res.message === 'success') {
@@ -13,14 +14,14 @@ export async function initFolderTree () {
         molecule.folderTree.add(folderTreeData);
     }
 }
-
+// 选择状态
 export function handleSelectFolderTree() {
     molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
         molecule.editor.open(transformToEditorTab(file))
         updateStatusBarLanguage(file.data.language);
     });
 }
-
+// 更新状态栏的语言
 export function updateStatusBarLanguage(language: string) {
     if (!language) return;
     language = language.toUpperCase();
@@ -32,7 +33,7 @@ export function updateStatusBarLanguage(language: string) {
         molecule.statusBar.add(Object.assign({}, STATUS_BAR_LANGUAGE, { name: language } ), Float.right);
     }
 }
-
+// 
 export function handleStatusBarLanguage() {
     const moleculeEditor = molecule.editor;
     moleculeEditor.onSelectTab((tabId, groupId) => {

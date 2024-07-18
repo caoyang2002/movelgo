@@ -1,3 +1,4 @@
+// 编辑上方右侧的三个点
 import molecule from '@dtinsight/molecule';
 import { IExtension } from '@dtinsight/molecule/esm/model/extension';
 import { IExtensionService } from '@dtinsight/molecule/esm/services';
@@ -61,7 +62,7 @@ export class RunningExtension implements IExtension {
                     break;
                 }
                 case EDITOR_ACTION_GITHUB.id: {
-                   window.open('https://github.com/DTStack/molecule', '_blank');
+                   window.open('https://github.com/caoyang2002/movelgo', '_blank');
                    break;
                 }
                 default: {

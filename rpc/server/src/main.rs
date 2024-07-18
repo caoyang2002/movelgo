@@ -1,5 +1,5 @@
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
-use std::process::{Command, Stdio};
+use std::process::Command;
 use std::fs;
 use std::path::Path;
 use std::str;
@@ -34,9 +34,9 @@ async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
     } else {
         println!("[已存在]: {}", move_file);
     }
-    let tmp_file = "../move/sources/main.move";
+    // let tmp_file = "../move/sources/main.move";
 
-    match fs::write(tmp_file, move_code) {
+    match fs::write(move_file, move_code) {
         Ok(_) => (),
         Err(e) => {
             return HttpResponse::InternalServerError().body(format!("[写入文件] Failed to write Move code to file: {}", e));
@@ -44,6 +44,7 @@ async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
     }
 
     // 编译 Move 代码
+    println("[开始编译] {}",move_file)
     let compile_output = Command::new("aptos")
     .arg("move")
     .arg("test")
