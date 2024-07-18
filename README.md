@@ -1,56 +1,75 @@
 Power by [Molecule](https://github.com/DTStack/molecule)
 
-# 项目结构
+# Project structure
 
-`./src` UI 界面
+`./src` UI
 
-`./rpc` 服务调用
+`./rpc` rpc (To runing move code)
 
-`./users` 存储用户创建的代码
+`./users_file` users_file (Move code)
 
-# 资源
+# Start
 
-[开发示例](https://dtstack.github.io/molecule/zh-CN/docs/guides/extend-builtin-ui)
+## auto
 
-## 可用脚本
+`./init.sh`
 
-在项目目录中，可以运行以下命令：
+`./run.sh`
 
-### `yarn start`
+`./stop.sh`
 
-以开发模式运行应用程序。\
-在浏览器中打开 [http://localhost:3000](http://localhost:3000) 可以查看应用。
+## manual
 
-页面将在进行编辑时重新加载。\
-在控制台中还将显示任何 lint 错误。
+`yarn start`
 
-### `yarn test`
+`ts-node ./users-file/server.ts`
 
-以交互式监视模式启动测试运行器。\
-请查看关于 [运行测试](https://facebook.github.io/create-react-app/docs/running-tests) 的部分获取更多信息。
+`cd rpc/server | cargo run`
 
-### `yarn build`
+# Test
 
-将应用程序构建到 `build` 文件夹中以供生产使用。\
-它会以生产模式正确捆绑 React，并优化构建以获得最佳性能。
+## aptos
 
-构建将被压缩，并且文件名包含哈希值。\
-你的应用程序已准备好部署！
+```bash
+cd rpc/move
+aptos move init --name user
+aptos init --network testnet
+aptos move test
+```
 
-请查看有关 [部署](https://facebook.github.io/create-react-app/docs/deployment) 的部分获取更多信息。
+## rpc (rust)
 
-### `yarn eject`
+In terminal
 
-**注意：这是一个单向操作。一旦 `eject`，就无法返回！**
+```bash
+ curl -X POST -d 'module 0x12::test{
+  use std::debug::print;
+  use std::string::utf8;
+  #[test]
+  fun test_server(){
+    print(&utf8(b"server is running"));
+  }
+}' http://127.0.0.1:8081/run_move
+```
 
-如果对构建工具和配置选择不满意，可以随时 `eject`。此命令将从项目中移除单一的构建依赖项。
+## user_file
 
-相反，它会复制所有配置文件和传递依赖项（webpack、Babel、ESLint 等）直接到你的项目中，因此你完全控制它们。除了 `eject` 外，所有命令仍将继续工作，但它们将指向复制的脚本，以便你可以进行调整。在这一点上，你将自己负责。
+```bash
+ts-node ./users-file/server.ts
+```
 
-你不必使用 `eject`。提供的特性集适用于小型和中型部署，当你准备好自定义时，你可以使用它。
+Browser access:
 
-## 了解更多
+http://localhost:3001 (default)
 
-你可以在 [Create React App 文档](https://facebook.github.io/create-react-app/docs/getting-started) 中获取更多信息。
+## react
 
-要学习 React，请查看 [React 文档](https://reactjs.org/)。
+`yarn start`
+
+Browser access:
+
+http://localhost:3000 (default)
+
+# resource
+
+[example](https://dtstack.github.io/molecule/zh-CN/docs/guides/extend-builtin-ui)
