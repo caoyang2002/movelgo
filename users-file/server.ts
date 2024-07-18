@@ -139,6 +139,8 @@ const corsOptions = {
   origin: 'http://localhost:3000', // 允许的请求来源
   credentials: true // 允许携带认证信息（如cookies）
 };
+// 解析请求体
+app.use(express.json());
 
 // 应用cors中间件
 app.use(cors(corsOptions));
@@ -179,7 +181,7 @@ function generateHash() {
 
 // Example route to handle user activity
 app.post('/user-file', (req: Request & { folderName?: string }, res: Response) => {
-  console.log("[获取fileName] 用户获取folderName", req.folderName);
+  console.log("[获取fileName] 用户获取 cookie 中携带的 folderName 是：", req.folderName);
   res.json({ message: 'User folder set', folderName: req.folderName });
 });
 
@@ -220,20 +222,32 @@ app.get('/fetch-files', (req: Request & { folderName?: string }, res: Response) 
   }
 });
 
+// app.post('/create-file', (req, res) => {
+//   console.log(req.body);
+//   res.send('完成');
+// })
 
-// 创建文件
-app.post('/create-file', (req: Request, res: Response) => {
-  console.log("创建文件", req.body);
-  const folderPath = path.join(usersBaseDir, req.body.folderName);
-  const filePath = path.join(folderPath, req.body.fileName);
+// // 创建文件
+app.post('/create-file', (req: Request & { folderName?: string,fileName?:string }, res: Response) => {
+  console.log("[获取文件名] 用户获取 folderName：", req.folderName);
+//  console.log("请求内容：",req)
+   // 从请求体中获取 folderName 和 fileName
+   console.log("请求体内容：", req.body);
+  //  const { folderName, filePath } = req.body;
+  //  console.log("请求体内容：", folderName, filePath);
+
+  const { filePath} = req.body;
+  console.log("文件创建路径：", req.body.filePath);
+  const folderPath = path.join(usersBaseDir, req.folderName);
+  const fileFullPath = path.join(folderPath, filePath);
 
   try {
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath); // 创建文件夹
     }
 
-    fs.writeFileSync(filePath, ''); // 创建空文件
-    res.json({ message: 'File created', filePath: filePath });
+    fs.writeFileSync(fileFullPath, ''); // 创建空文件
+    res.json({ message: 'File created', filePath: req.folderName.toString() + "/"+filePath.toString() });
   } catch (error) {
     res.status(500).json({ message: 'Error creating file', error: error.message });
   }
