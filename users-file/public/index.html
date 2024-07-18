@@ -1,33 +1,275 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Retrieve FileName</title>
+  <style>
+    .tree ul {
+      list-style-type: none;
+    }
+
+    .tree li {
+      margin: 5px 0;
+    }
+
+    .tree .file:before {
+      content: ' ';
+    }
+
+    .tree .folder:before {
+      content: ' ';
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>File Name</h1>
+  <div id="fileName"></div>
+
+  <h2>File Tree</h2>
+  <div id="fileTree" class="tree"></div>
+
+  <script>
+    // 获取文件夹内容
+    async function fetchFolderContents (folderPath) {
+      const response = await fetch('http://localhost:3001/fetch-files', {
+        method: 'GET',
+        credentials: 'include' // 确保请求携带cookie
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const files = data.files;
+      console.log("files is ", files)
+      return files;
+    }
+
+    // 递归获取 `/` 之前的字符串 
+    function extractAllSegments (fullPath) {
+      console.log("fullPath is ", fullPath)
+      // 寻找第一个斜杠的索引
+      const index = fullPath.indexOf('/');
+
+      // 如果找不到斜杠，则返回整个字符串作为结果
+      if (index === -1) {
+        return [fullPath]; // 返回包含当前路径的数组作为最终结果
+      }
+
+      // 截取第一个斜杠之前的部分作为当前层级路径
+      const segment = fullPath.substring(0, index);
+
+      // 递归调用，处理剩余路径部分
+      const restPath = fullPath.substring(index + 1);
+      const segments = extractAllSegments(restPath);
+
+      // 将当前层级路径加入结果数组中
+      segments.unshift(segment);
+
+      return segments;
+    }
+
+    // 渲染文件树
+    async function renderTree (files, basePath) {
+      const ul = document.createElement('ul');
+
+      for (const file of files) {
+        console.log("文件", file)
+        const li = document.createElement('li');
+
+        const firstSegment = extractAllSegments(file);
+        console.log(firstSegment); // 输出: '553dc65fec23f58f97c0f37d36f27fc0'
+
+        if (isFolder) {
+          const folderName = file.substring(0, index);
+          li.className = 'folder';
+          li.innerHTML = `<span>📁 ${folderName}</span>`;
+          // const subFiles = await fetchFolderContents(`${basePath}/${folderName}`);
+          // const subTree = await renderTree(subFiles, `${basePath}/${folderName}`);
+          li.appendChild(subTree);
+        } else {
+          li.className = 'file';
+          li.innerHTML = `<span>📄 ${fileName}</span>`;
+        }
+
+        ul.appendChild(li);
+      }
+
+
+      return ul;
+    }
+
+
+
+
+
+
+    // 更新 UI
+    async function updateUI (folderName) {
+      const fileNameElement = document.getElementById('fileName');
+      fileNameElement.textContent = folderName;
+
+      try {
+        const files = await fetchFolderContents(folderName);
+        const treeElement = renderTree(files, folderName);
+        document.getElementById('fileTree').appendChild(treeElement);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    // 发送 POST 请求到服务器获取 folderName
+    fetch('http://localhost:3001/user-file', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      // body: JSON.stringify({ userId: '123' }) // 这里可以根据需要修改发送的数据
+    })
+      .then(response => response.json())
+      .then(data => {
+        updateUI(data.folderName); // 使用从服务器返回的 folderName 更新 UI
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  </script>
+</body>
+
+</html> -->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <title>Retrieve FileName</title>
+  <style>
+    .tree ul {
+      list-style-type: none;
+    }
+
+    .tree li {
+      margin: 5px 0;
+    }
+
+    .tree .file:before {
+      content: '📄 ';
+    }
+
+    .tree .folder:before {
+      content: '📁 ';
+    }
+  </style>
 </head>
 
 <body>
 
   <h1>File Name</h1>
-  <p id="fileName"></p>
+  <div id="fileName"></div>
+
+  <h2>File Tree</h2>
+  <div id="fileTree" class="tree"></div>
 
   <script>
-    // 发送 POST 请求到服务器
-    fetch('http://localhost:3001/user-file', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      //body: JSON.stringify({ userId: '123' }) // 这里可以根据需要修改发送的数据
-    })
-      .then(response => response.json())
-      .then(data => {
-        const fileNameElement = document.getElementById('fileName');
-        fileNameElement.textContent = data.folderName; // 显示从服务器返回的 folderName
-      })
-      .catch(error => {
-        console.error('Error:', error);
+    // 获取文件夹内容
+    async function fetchFolderContents () {
+      const response = await fetch('http://localhost:3001/fetch-files', {
+        method: 'GET',
+        credentials: 'include' // 确保请求携带cookie
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const files = data.files;
+      console.log("files is ", files)
+      return files;
+    }
+
+
+    // 假设这是从服务器获取的文件路径列表
+
+
+
+    // 构建文件夹和文件的树形结构
+    function buildTree (filePaths) {
+      const tree = {};
+
+      filePaths.forEach(path => {
+        const parts = path.split('/');
+        let current = tree;
+
+        for (let i = 0; i < parts.length; i++) {
+          const part = parts[i];
+          if (!current[part]) {
+            current[part] = {};
+          }
+          current = current[part];
+        }
+      });
+
+      return tree;
+    }
+
+    // 递归渲染文件树
+    function renderTree (tree, path = '') {
+      const ul = document.createElement('ul');
+
+      for (const [name, content] of Object.entries(tree)) {
+        const li = document.createElement('li');
+        const isFolder = typeof content === 'object' && Object.keys(content).length > 0;
+        // const iconName = isFolder ? '📁' : '📄';
+        const finalPath = path ? `${path}/${name}` : name;
+
+        li.className = isFolder ? 'folder' : 'file';
+        // li.innerHTML = `<span>${iconName}${name}</span>`;
+        li.innerHTML = `<span>${name}</span>`;
+        ul.appendChild(li);
+
+        if (isFolder) {
+          const subtree = renderTree(content, finalPath);
+          li.appendChild(subtree);
+        }
+      }
+
+      return ul;
+    }
+
+    // 更新 UI
+    async function updateUI () {
+      const files = await fetchFolderContents();
+      console.log("files is ", files)
+      const tree = buildTree(files);
+      const treeElement = renderTree(tree);
+      document.getElementById('fileTree').appendChild(treeElement);
+    }
+
+
+
+    // 页面加载完毕后更新 UI
+    document.addEventListener('DOMContentLoaded', updateUI);
+    // 发送 POST 请求到服务器获取 folderName
+    // fetch('http://localhost:3001/user-file', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     updateUI(data.folderName); // 使用从服务器返回的 folderName 更新 UI
+    //     console.log("data is ", data)
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
   </script>
 </body>
 
