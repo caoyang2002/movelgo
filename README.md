@@ -1,48 +1,56 @@
 Power by [Molecule](https://github.com/DTStack/molecule)
 
-# Getting Started with Create React App
+# 项目结构
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+`./src` UI 界面
 
-## Available Scripts
+`./rpc` 服务调用
 
-In the project directory, you can run:
+`./users` 存储用户创建的代码
+
+# 资源
+
+[开发示例](https://dtstack.github.io/molecule/zh-CN/docs/guides/extend-builtin-ui)
+
+## 可用脚本
+
+在项目目录中，可以运行以下命令：
 
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+以开发模式运行应用程序。\
+在浏览器中打开 [http://localhost:3000](http://localhost:3000) 可以查看应用。
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+页面将在进行编辑时重新加载。\
+在控制台中还将显示任何 lint 错误。
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+以交互式监视模式启动测试运行器。\
+请查看关于 [运行测试](https://facebook.github.io/create-react-app/docs/running-tests) 的部分获取更多信息。
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+将应用程序构建到 `build` 文件夹中以供生产使用。\
+它会以生产模式正确捆绑 React，并优化构建以获得最佳性能。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+构建将被压缩，并且文件名包含哈希值。\
+你的应用程序已准备好部署！
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+请查看有关 [部署](https://facebook.github.io/create-react-app/docs/deployment) 的部分获取更多信息。
 
 ### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**注意：这是一个单向操作。一旦 `eject`，就无法返回！**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+如果对构建工具和配置选择不满意，可以随时 `eject`。此命令将从项目中移除单一的构建依赖项。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+相反，它会复制所有配置文件和传递依赖项（webpack、Babel、ESLint 等）直接到你的项目中，因此你完全控制它们。除了 `eject` 外，所有命令仍将继续工作，但它们将指向复制的脚本，以便你可以进行调整。在这一点上，你将自己负责。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+你不必使用 `eject`。提供的特性集适用于小型和中型部署，当你准备好自定义时，你可以使用它。
 
-## Learn More
+## 了解更多
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+你可以在 [Create React App 文档](https://facebook.github.io/create-react-app/docs/getting-started) 中获取更多信息。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+要学习 React，请查看 [React 文档](https://reactjs.org/)。
