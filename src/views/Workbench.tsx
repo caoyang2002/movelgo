@@ -37,7 +37,7 @@ import {
 import { IWorkbench } from '@dtinsight/molecule/esm/model/workbench'
 import { Display, Pane, SplitPane } from '@dtinsight/molecule/esm/components'
 
-import { MySidePane } from './blockchain/RightSidePane'
+import { MySidePane } from './blockchainSidePane'
 
 const mainBenchClassName = prefixClaName('mainBench')
 const workbenchClassName = prefixClaName('workbench')
