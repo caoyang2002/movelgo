@@ -30,8 +30,8 @@ router.use(
       fs.mkdirSync(folderPath) // 创建文件夹
       // 创建 Readme.md
       fs.writeFileSync(
-        path.join(folderPath, 'Readme.md'),
-        'This is your folder'
+        path.join(folderPath, 'README.md'),
+        'This is your personal folder. You can store your files here.'
       )
     }
 
@@ -46,7 +46,7 @@ router.post(
   '/user-file',
   (req: Request & { folderName?: string }, res: Response) => {
     console.log(
-      '[获取fileName] 用户获取 cookie 中携带的 folderName 是：',
+      '[获取] 用户获取 cookie 中携带的 folderName 是：',
       req.folderName
     )
     res.json({ message: 'User folder set', folderName: req.folderName })
@@ -57,14 +57,14 @@ router.post(
 router.get(
   '/fetch-files',
   (req: Request & { folderName?: string }, res: Response) => {
-    console.log('[获取文件名] 用户获取 folderName', req.folderName)
+    console.log('[获取] 用户获取 folderName', req.folderName)
 
     const folderPath = path.join(usersBaseDir, req.folderName)
-    console.log('文件夹路径：', folderPath)
+    console.log('[检查] 文件夹路径：', folderPath)
 
     try {
       const files = getAllFilesAndFolders(folderPath)
-      console.log('文件列表：', files)
+      console.log('[获取] 文件列表：', files)
       res.json({ files: files })
     } catch (error) {
       console.error('Error fetching files:', error)
