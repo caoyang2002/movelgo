@@ -27,6 +27,8 @@ export function BlockchainSidePaneView() {
 
   const folderName = useFolderName()
   const address = '0x1'
+  const token = 12
+  const module = 'test'
 
   return (
     <>
@@ -38,6 +40,8 @@ export function BlockchainSidePaneView() {
         <Content>
           <p style={{ textAlign: 'center' }}>Move on Aptos</p>
           <h1 className="">Address: {address}</h1>
+          <h1 className="">Token: {token}</h1>
+          <h1 className="">Module: {module}</h1>
         </Content>
       </div>
       <Header
