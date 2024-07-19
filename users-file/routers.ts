@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express'
-import { getAllFilesAndFolders } from './controllers/folderController'
+import { getAllFilesAndFolders } from './controllers/getAllFileAndFolder'
 import { generateHash } from './utils'
 import fs from 'fs'
 import path from 'path'
@@ -8,7 +8,9 @@ const router = express.Router()
 // 指定用户文件夹的存储目录
 const usersBaseDir = path.join(__dirname, './users')
 
-// 中间件，它会在所有匹配的路由处理函数之前执行
+/**
+ * 中间件，它会在所有匹配的路由处理函数之前执行
+ */
 router.use(
   async (req: Request & { folderName?: string }, res: Response, next) => {
     console.log('[操作] 进入中间件')
@@ -41,7 +43,9 @@ router.use(
   }
 )
 
-// Example route to handle user activity
+/**
+ * 获取用户 cookie 中的 folderName
+ */
 router.post(
   '/user-file',
   (req: Request & { folderName?: string }, res: Response) => {
@@ -53,17 +57,16 @@ router.post(
   }
 )
 
-// 获取用户的所有文件
+/**
+ * 获取用户的所有文件
+ */
 router.get(
   '/fetch-files',
   (req: Request & { folderName?: string }, res: Response) => {
     console.log('[获取] 用户获取 folderName', req.folderName)
 
-    const folderPath = path.join(usersBaseDir, req.folderName)
-    console.log('[检查] 文件夹路径：', folderPath)
-
     try {
-      const files = getAllFilesAndFolders(folderPath)
+      const files = getAllFilesAndFolders(req.folderName)
       console.log('[获取] 文件列表：', files)
       res.json({ files: files })
     } catch (error) {
@@ -73,7 +76,9 @@ router.get(
   }
 )
 
-// // 创建文件
+/**
+ * 创建文件
+ */
 router.post(
   '/create-file',
   (
