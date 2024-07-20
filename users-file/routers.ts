@@ -1,8 +1,9 @@
-import express, { Request, Response, NextFunction } from 'express'
+import express, { Request, Response } from 'express'
 import { getAllFilesAndFolders } from './controllers/getAllFileAndFolder'
 import { generateHash } from './utils'
 import fs from 'fs'
 import path from 'path'
+import { convertProjectInfoToTree } from './controllers/projectInfoToJson'
 
 const router = express.Router()
 // 指定用户文件夹的存储目录
@@ -43,6 +44,40 @@ router.use(
   }
 )
 
+/**
+ * 获取用户的项目信息
+ */
+router.get(
+  '/user-project-json',
+  (req: Request & { folderName?: string }, res: Response) => {
+    try {
+      const filesWithDot = getAllFilesAndFolders(req.folderName) // 返回：['../553dc65fec23f58f97c0f37d36f27fc0/Readme.md', ...]
+      const files = filesWithDot.map((path) => path.replace(/^\.\.\//, ''))
+      console.log('[检查] 文件列表:', files)
+      convertProjectInfoToTree(files)
+        .then((fileTree) => {
+          console.log('[检查] 文件树:', fileTree)
+          const jsonProjectInfo = JSON.stringify(fileTree, null, 2)
+          res.json(jsonProjectInfo)
+          // console.log(jsonResult)
+        })
+        .catch((error) => {
+          console.error('转换文件树时发生错误:', error)
+          res.json({
+            code: 403,
+            message: 'error:' + error.toString,
+            folderName: req.folderName,
+          })
+        })
+    } catch (error) {
+      res.json({
+        code: 404,
+        message: 'error:' + error.toString,
+        folderName: req.folderName,
+      })
+    }
+  }
+)
 /**
  * 获取用户 cookie 中的 folderName
  */
