@@ -19,8 +19,8 @@ body {
 .mo-welcome > span::after {
   content: '';
   position: absolute;
-  width: 200px;
-  height: 200px;
+  /* width: 200px;
+  height: 200px; */
   background-image: url('../images/MovelgoGrayIcon.svg') !important;
   background-size: 80% auto !important;
   background-position: center !important;
@@ -28,7 +28,6 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-image: url('../images/MovelgoGrayIcon.svg') !important;
   width: 300px;
   height: 300px;
   font-size: 100px;
@@ -55,6 +54,22 @@ body {
   z-index: 1;
 }
 
-.mo-menuBar--horizontal__logo__content {
+/* -------------------------------------------- */
+.mo-menuBar--horizontal__logo > img {
   display: none;
+}
+.mo-menuBar--horizontal__logo::before {
+  content: ''; /* 必须提供，即使为空 */
+  display: block; /* 使伪元素显示为块级元素 */
+  position: relative; /* 绝对定位 */
+
+  color: blue;
+  top: 0;
+  left: 0;
+  width: 80%; /* 与父元素宽度一致 */
+  height: 80%; /* 与父元素高度一致 */
+  background-image: url('../images/MovelgoIcon.svg') !important;
+  background-size: contain; /* 使背景图片适应元素大小 */
+  background-repeat: no-repeat; /* 防止背景图片平铺 */
+  background-position: center center; /* 背景图片居中 */
 }
