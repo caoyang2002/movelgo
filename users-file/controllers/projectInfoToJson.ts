@@ -46,19 +46,27 @@ function generateId(): number {
  */
 function buildJsonInfo(
   nodes: PathInfoNode[],
-  userMainPath: string
+  folderName: string
 ): PathInfoNode[] {
-  userMainPath = path.join(usersBaseDir, userMainPath)
+  const folderFullName = path.join(usersBaseDir, folderName)
   // const filesAndFolders: PathInfoNode[] = []
 
   function checkDir(dirPath: string, parentChildren): void {
     const entries = fs.readdirSync(dirPath, { withFileTypes: true })
     entries.forEach((entry) => {
       const entryPath = path.join(dirPath, entry.name)
+      const location = path
+        .relative(usersBaseDir, entryPath)
+        .split('/') // 以 '/' 分割路径
+        .filter((part) => part !== '') // 过滤掉空字符串
+        .map((part, index, arr) => (index === 0 ? 'ROOT' : part)) // 将数组的第一个元素替换为 'root'
+        .join('/') // 重新组合数组元素为一个字符串
+
+      console.log(`[获取] location : ${location}`)
       const newNode = {
         id: generateId(),
         name: entry.name,
-        location: entryPath,
+        location: location,
         fileType: entry.isDirectory() ? 'Folder' : 'File',
         isLeaf: !entry.isDirectory(),
         data: entry.isDirectory()
@@ -80,7 +88,7 @@ function buildJsonInfo(
     })
   }
 
-  checkDir(userMainPath, nodes)
+  checkDir(folderFullName, nodes)
   return nodes
 }
 
@@ -90,8 +98,8 @@ async function buildFileTreeJson(nodes: PathInfoNode[], folderName: string) {
   const folderFullPath = path.join(usersBaseDir, folderName)
   // console.log(`[获取] 文件夹绝对路径: ${folderFullPath}`)
   // 使用示例
-  const directoryPath = '553dc65fec23f58f97c0f37d36f27fc0' // 替换为你的文件夹路径
-  const filesAndFolders = buildJsonInfo(nodes, directoryPath)
+  // const directoryPath = '553dc65fec23f58f97c0f37d36f27fc0' // 替换为你的文件夹路径
+  const filesAndFolders = buildJsonInfo(nodes, folderName)
   nodes = filesAndFolders
   return filesAndFolders
 }
