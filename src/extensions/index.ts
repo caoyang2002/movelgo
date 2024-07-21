@@ -12,7 +12,9 @@ import { ActionExtension } from './action';
 import { GoToGithubExtension } from './github';
 import { AccountExtension } from './account';
 
-const extensions: IExtension[] = [
+// 渲染顺序
+const extensions: IExtension[] = [ 
+  new AccountExtension(),
     new FirstExtension(),
     new DataSourceExtension(),
     new TerminalExtension(),
@@ -21,7 +23,7 @@ const extensions: IExtension[] = [
     new SettingsExtension(),
     new MenuBarExtension(),
     new ActionExtension(),
-    new AccountExtension(),
+   
     GoToGithubExtension,
     OneDarkPro,
     ExtendLocales,

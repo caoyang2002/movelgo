@@ -58,7 +58,7 @@ In terminal
 ts-node ./users-file/server.ts
 ```
 
-Browser access:
+Browser access to:
 
 http://localhost:3001 (default)
 
@@ -66,10 +66,16 @@ http://localhost:3001 (default)
 
 `yarn start`
 
-Browser access:
+Browser access to:
 
 http://localhost:3000 (default)
 
 # resource
 
-[example](https://dtstack.github.io/molecule/zh-CN/docs/guides/extend-builtin-ui)
+[molecule example](https://dtstack.github.io/molecule/zh-CN/docs/guides/extend-builtin-ui)
+
+[molevule doc](https://dtstack.github.io/molecule/zh-CN/docs/introduction)
+
+[icon](https://microsoft.github.io/vscode-codicons/dist/codicon.html)
+
+[remix](https://remix.ethereum.org/#lang=zh)

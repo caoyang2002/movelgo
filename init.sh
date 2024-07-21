@@ -1,8 +1,7 @@
 #!/bin/bash
 #
+# 检查是否安装了 aptos
 aptos_version=$(aptos --version)
-# echo $aptos_version
-
 if [ $? -ne 0 ]; then
   echo "Aptos is not installed."
   echo "Starting to install the Aptos ..."
@@ -10,10 +9,8 @@ if [ $? -ne 0 ]; then
 else
   echo "Aptos has been installed: $aptos_version"
 fi
-#
+# 检查是否安装了 move
 move_version=$(aptos move --version)
-# echo $move_version
-
 if [ $? -ne 0 ]; then
   echo "Move is not installed."
   echo "Starting to install the Move ..."
@@ -21,17 +18,14 @@ if [ $? -ne 0 ]; then
 else
   echo "Move has been installed: $move_version"
 fi
-
+# 检查是否安装了 nodejs
 nodejs_version=$(node --version)
-# echo $move_version
-
 if [ $? -ne 0 ]; then
   echo "Nodejs is not installed."
   echo "Starting to install the Nodejs ..."
   echo "//TODO"
 else
   echo "Nodejs has been installed: $nodejs_version"
-
 fi
 
 # 检测并使用已安装的包管理器安装 package.json 中的依赖
@@ -69,7 +63,6 @@ install_node_packages() {
 
 # 执行安装
 install_node_packages
-
 if [ $? -ne 0 ]; then
   echo "Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually."
 fi

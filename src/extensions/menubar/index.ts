@@ -1,4 +1,5 @@
 
+// 顶部 VSCode 菜单项
 import molecule from '@dtinsight/molecule';
 import { IExtension, IMenuBarItem } from '@dtinsight/molecule/esm/model';
 import { IExtensionService } from '@dtinsight/molecule/esm/services';
