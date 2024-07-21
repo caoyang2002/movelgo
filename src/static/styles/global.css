@@ -1,10 +1,60 @@
+/* 鸡贼配置 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 body {
   margin: 0;
 }
-/* 编辑器中的 Logo */
-.logo{
-  display:none;
+/* -------------- 更改 Logo -------------- */
+.logo > g {
+  display: none;
+}
+
+.mo-welcome > span {
+  margin-top: 10rem;
+  position: relative;
+  display: inline-block;
+}
+
+.mo-welcome > span::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-image: url('../images/MovelgoGrayIcon.svg') !important;
+  background-size: 80% auto !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url('../images/MovelgoGrayIcon.svg') !important;
+  width: 300px;
+  height: 300px;
+  font-size: 100px;
+}
+/* ----------------- 更改文本 ---------------- */
+.mo-welcome > h1 {
+  display: none;
+}
+
+.keybindings {
+  position: relative;
+}
+
+.keybindings::before {
+  content: ' Welcome to Movelgo! ';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #333;
+  font-size: 36px;
+  font-weight: bold;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.mo-menuBar--horizontal__logo__content {
+  display: none;
 }
