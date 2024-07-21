@@ -45,16 +45,16 @@ router.use(
 )
 
 /**
- * 获取用户的项目信息
+ * 获取用户的项目信息, 返回一个 json 对象
  */
 router.get(
   '/user-project-json',
   (req: Request & { folderName?: string }, res: Response) => {
     try {
-      const filesWithDot = getAllFilesAndFolders(req.folderName) // 返回：['../553dc65fec23f58f97c0f37d36f27fc0/Readme.md', ...]
-      const files = filesWithDot.map((path) => path.replace(/^\.\.\//, ''))
-      console.log('[检查] 文件列表:', files)
-      convertProjectInfoToTree(files)
+      // const filesWithDot = getAllFilesAndFolders(req.folderName) // 返回：['../553dc65fec23f58f97c0f37d36f27fc0/Readme.md', ...]
+      // const files = filesWithDot.map((path) => path.replace(/^\.\.\//, ''))
+      // console.log('[检查] 文件列表:', files)
+      convertProjectInfoToTree(req.folderName)
         .then((fileTree) => {
           console.log('[检查] 文件树:', fileTree)
           const jsonProjectInfo = JSON.stringify(fileTree, null, 2)
