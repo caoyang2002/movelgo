@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="The Molecule Web IDE demo project"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo@1x.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="The Move IDE" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo@1x.png" />
+  <!--
+      manifest.json 文件提供了当您的网页应用在用户的手机或桌面设备上安装时所需的元数据。
+      详情请访问 https://developers.google.com/web/fundamentals/web-app-manifest/ 
     -->
-    <title>Molecule Demo</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
+      注意上面标签中 %PUBLIC_URL% 的使用。
+      在构建过程中，它会被替换成 `public` 文件夹的 URL。
+      只有在 `public` 文件夹中的文件才能从 HTML 文件中被引用。
+
+      与 "/favicon.ico" 或 "favicon.ico" 不同，"%PUBLIC_URL%/favicon.ico" 无论是在客户端路由还是非根目录的公共 URL 下都能正确工作。
+      通过执行 `npm run build` 命令了解如何配置非根目录的公共 URL。
+    -->
+  <title>Move IDE</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -39,8 +37,9 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script type="text/javascript">
-      window.location.hash = '#/';
-    </script>
-  </body>
+  <script type="text/javascript">
+    window.location.hash = '#/';
+  </script>
+</body>
+
 </html>
