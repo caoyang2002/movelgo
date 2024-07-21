@@ -40,33 +40,26 @@ export class UniqueNumberGenerator {
   }
 }
 
-// 检查路径是文件还是文件夹
-export enum PathNodeType {
-  File,
-  Folder,
-  Error,
-}
-
 /**
  * 检查路径的文件类型（File or Folder）
  * @param path 用户主目录的相对路径, 例如: 553dc65fec23f58f97c0f37d36f27fc0/Readme.md
  * @returns utils.FileNodeType
  */
-export const checkPathType = async (thePath: string): Promise<PathNodeType> => {
+export const checkPathType = async (thePath: string) => {
   const fullpath = path.join(usersBaseDir, thePath)
   console.log('[检查] 开始检查:', thePath)
   try {
     const stats = await fs.promises.stat(fullpath)
     if (stats.isFile()) {
       console.log('[检查] 类型：文件')
-      return PathNodeType.File
+      return 'File'
     } else if (stats.isDirectory()) {
       console.log('[检查] 类型：目录')
-      return PathNodeType.Folder
+      return 'Folder'
     }
   } catch (err) {
     console.error('[检查] 类型：错误', err)
-    return PathNodeType.Error
+    return 'Error'
   }
 }
 
@@ -80,6 +73,17 @@ export const getFileName = (path: string) => {
   console.log('[获取] 分割文件夹和文件名', parts)
   const fileName = parts.pop()
   return fileName
+}
+/**
+ * 获取首个文件夹名
+ * @param path 建议为用户主目录路径的相对文件路径, 例如：553dc65fec23f58f97c0f37d36f27fc0/Readme.md
+ * @returns FolderName
+ */
+export const getFolderName = (path: string) => {
+  const parts = path.split('/')
+  console.log('[获取] 分割文件夹和文件名', parts)
+  const folderName = parts[0]
+  return folderName
 }
 
 /**
