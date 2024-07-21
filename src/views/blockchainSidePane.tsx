@@ -59,8 +59,8 @@ export function BlockchainSidePaneView() {
   )
 }
 
-export const MySidePane: ISidebarPane = {
-  id: 'mySidePane',
+export const BlockchainSidePane: ISidebarPane = {
+  id: 'blockchainSidePane',
   // title: 'Tools',
   title: 'Move',
   render: () => {
