@@ -63,14 +63,15 @@ fi
 # ---------------------------------------- run
 
 CURRENT_DIR=$(pwd)
-
+echo ">>> 开始启动 Movelgo <<<"
 echo "[检查] Move"
 cd rpc/move
 aptos move test --skip-fetch-latest-git-deps >../../log/movelog 2>&1 &
-if [ $? -eq 0 ]; then
-  printf '%b[SUCCESS] Move 检查通过%b\n' "$green" "$reset" >&2
-else
+if [ $? -ne 0 ]; then
   printf "%b[ERROR] Move 检查失败%b\n" "$red_background" "$reset" >&2
+  exit 1
+else
+  printf '%b[SUCCESS] Move 检查通过%b\n' "$green" "$reset" >&2
 fi
 cd $CURRENT_DIR
 
@@ -78,6 +79,7 @@ echo "[启动] UI"
 nohup yarn start >log/editor.log 2>&1 &
 if [ $? -ne 0 ]; then
   printf "%b[ERROR] UI 启动失败%b\n" "$red_background" "$reset" >&2
+  exit 1
 else
   printf '%b[SUCCESS] UI 启动成功%b\n' "$green" "$reset" >&2
 fi
@@ -88,6 +90,7 @@ cd rpc/server
 nohup cargo run >../../log/rpc.log 2>&1 &
 if [ $? -ne 0 ]; then
   printf "%b[ERROR] RPC 启动失败%b\n" "$red_background" "$reset" >&2
+  exit 1
 else
   printf '%b[SUCCESS] RPC 启动成功%b\n' "$green" "$reset" >&2
 fi
@@ -98,7 +101,9 @@ cd users-file
 nohup ts-node server.ts >../log/file-server.log 2>&1 &
 if [ $? -ne 0 ]; then
   printf "%b[ERROR] FileSystem 启动失败%b\n" "$red_background" "$reset" >&2
+  exit 1
 else
   printf '%b[SUCCESS] FileSystem 启动成功%b\n' "$green" "$reset" >&2
 fi
 cd $CURRENT_DIR
+echo ">>> Movelgo 已启动 <<<"
