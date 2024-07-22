@@ -37,12 +37,32 @@ fi
 echo -e "[STOP] RPC 服务... \033[0m"
 
 # 尝试杀死 RPC 服务进程
-pkill -f "cargo run" >/dev/null 2>&1
-if [ $? -eq 0 ]; then
-  printf '%b[ERROR] RPC 服务停止失败%b\n' "$red_background" "$reset" >&2
+# 查找占用端口3020的进程
+pid=$(lsof -i :3020 | grep LISTEN | awk '{print $2}')
+
+# 检查是否找到了进程ID
+if [ -z "$pid" ]; then
+  printf "%b[SUCCESS] 没有找到占用端口 3020 的进程。\n%b" "$green" "$reset" >&2
 
 else
-  printf '%b[SUCCESS] RPC 服务已停止%b\n' "$green" "$reset" >&2
+  printf "%b[INFO] 找到占用端口3020的进程，PID：$pid \n%b" "$blue" "$reset" >&2
+
+  # 尝试使用SIGTERM信号终止进程
+  kill $pid
+  if [ $? -eq 0 ]; then
+    printf "%b[SUCCESS] 进程已通过SIGTERM信号终止。\n%b" "$green" "$reset" >&2
+
+  else
+    printf "%b[ERROR] SIGTERM信号失败，尝试使用SIGKILL信号。\n%b" "$red" "$reset" >&2
+    # 使用SIGKILL信号强制终止进程
+    kill -9 $pid
+    if [ $? -eq 0 ]; then
+
+      printf '%b[SUCCESS] 进程已通过 SIGKILL 信号强制终止。%b\n' "$green" "$reset" >&2
+    else
+      printf "%b[ERROR] 无法终止进程。\n%b" "$red_background" "$reset" >&2
+    fi
+  fi
 fi
 
 # 停止FileSystem服务

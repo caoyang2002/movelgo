@@ -66,7 +66,7 @@ CURRENT_DIR=$(pwd)
 echo ">>> 开始启动 Movelgo <<<"
 echo "[检查] Move"
 cd rpc/move
-aptos move test --skip-fetch-latest-git-deps >../../log/movelog 2>&1 &
+aptos move test --skip-fetch-latest-git-deps >../../log/move.log 2>&1 &
 if [ $? -ne 0 ]; then
   printf "%b[ERROR] Move 检查失败%b\n" "$red_background" "$reset" >&2
   exit 1
