@@ -4,6 +4,7 @@ import { generateHash } from './utils'
 import fs from 'fs'
 import path from 'path'
 import { convertProjectInfoToTree } from './controllers/projectInfoToJson'
+import axios from 'axios'
 
 const router = express.Router()
 // 指定用户文件夹的存储目录
@@ -224,7 +225,88 @@ router.post(
           .json({ message: 'Error creating file', error: error.message })
       }
     }
-  }
+  },
+  /**
+   * 保存代码
+   */
+  // TODO 实现保存功能
+  router.post(
+    '/save-code',
+    (
+      req: Request & { folderName?: string; fileName?: string },
+      res: Response
+    ) => {
+      console.log(
+        '[获取] 用户获取 cookie 中携带的 folderName 是：',
+        req.cookies.folderName
+      )
+      console.log('请求体内容：', req.body)
+
+      const folderName = req.cookies.folderName
+      const filePath = req.body.filePath
+      const fileContent = req.body.content // 假设请求体中包含内容的字段名为 content
+
+      if (!folderName || !filePath || !fileContent) {
+        return res.status(400).json({ message: '缺少必要的参数' })
+      }
+
+      // 构建完整的文件路径
+      const userFolderPath = path.join(__dirname, '../user', folderName)
+      const fullFilePath = path.join(userFolderPath, filePath)
+
+      try {
+        // 确保文件夹存在
+        if (!fs.existsSync(userFolderPath)) {
+          fs.mkdirSync(userFolderPath, { recursive: true })
+        }
+
+        // 写入文件
+        fs.writeFileSync(fullFilePath, fileContent)
+
+        res.json({ message: 'User folder set', folderName: folderName })
+      } catch (error) {
+        console.error('保存文件失败：', error)
+        res.status(500).json({ message: '服务器内部错误' })
+      }
+    }
+  ),
+
+  // TODO 实现编译功能
+  router.post(
+    '/move/test',
+    async (
+      req: Request & { folderName?: string; fileContent?: string },
+      res: Response
+    ) => {
+      // 定义请求体中的数据
+      const moveCode = req.body.fileContent
+      console.log('[获取] 请求体内容：', moveCode)
+      try {
+        // 使用 axios 发送 POST 请求到另一个服务器
+        const response = await axios.post(
+          'http://127.0.0.1:3020/move_test',
+          moveCode
+        )
+        console.log('服务器响应:', response.data)
+
+        // 将响应返回给客户端
+        res.json({
+          code: 200,
+          message: '成功',
+          data: response.data,
+        })
+      } catch (error) {
+        console.error('请求失败:', error)
+
+        // 将错误信息返回给客户端
+        res.json({
+          code: 403,
+          message: 'error: ' + error.toString(),
+          folderName: req.folderName,
+        })
+      }
+    }
+  )
 )
 
 export default router

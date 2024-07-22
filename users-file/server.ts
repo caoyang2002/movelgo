@@ -5,7 +5,7 @@ import path from 'path'
 import cookieParser from 'cookie-parser'
 
 const app = express()
-const PORT = 3001
+const PORT = 3010
 // 使用cookieParser中间件
 app.use(cookieParser())
 app.use(express.json())
