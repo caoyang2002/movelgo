@@ -4,6 +4,8 @@ use std::fs;
 use std::path::Path;
 use std::str;
 use actix_cors::Cors;
+use dotenv::dotenv;
+use std::env;
 
 async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
     println!("[接收 Move 代码] Move code: {:?}", move_code);
@@ -68,20 +70,40 @@ match compile_output {
     HttpResponse::Ok().body(String::from_utf8_lossy(&compile_output.unwrap().stdout).to_string())
 }
 
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // 获取当前执行文件的目录
+    let current_dir = env::current_dir()?;
+    
+    // 构建 .env 文件的路径（上移三层目录）
+    let env_path = current_dir.join("../../../.env");
+    
+    // 加载 .env 文件
+    dotenv::from_path(env_path).ok();
+    
+    // 从环境变量中读取 PORT，如果没有设置则使用默认值 3020
+    let port = env::var("RPC_PORT").unwrap_or_else(|_| "3020".to_string());
+    let address = format!("localhost:{}", port);
+ 
+
     // 启动服务器
+    println!("[服务器将启动在] http://{}", address);
     HttpServer::new(|| {
         App::new()
             // 添加CORS中间件
             .wrap(
                 Cors::permissive() // <- 使用 Cors::permissive() 替换 Cors::new()
-                    .allowed_origin("http://localhost:5173")
+                    .allowed_origin("http://localhost:3010")
+                    .allowed_origin("http://localhost:3000") 
+                    .allowed_methods([
+                        "POST",
+                    ])
             )
             // 定义路由
-            .route("/run_move", web::post().to(compile_and_run_move))
+            .route("/move_test", web::post().to(compile_and_run_move))
     })
-    .bind("127.0.0.1:8081")?
+    .bind(&address)?
     .run()
     .await
 }

@@ -18,6 +18,7 @@
     "@types/react-dom": "^18.0.0",
     "@webscopeio/react-console": "^1.2.1",
     "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
     "postcss": "^8.4.39",
     "react": "^18.0.0",
     "react-cookies": "^0.1.1",
@@ -33,7 +34,7 @@
     "xterm-for-react": "^1.0.4"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "PORT=$(dotenv get EDITOR_PORT) react-app-rewired  start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
