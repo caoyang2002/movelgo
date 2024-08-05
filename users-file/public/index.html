@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Retrieve FileName</title>
+  <title>工作区文件</title>
   <style>
     .tree ul {
       list-style-type: none;
@@ -27,6 +27,8 @@
 
   <h1>Main File Name</h1>
   <div id="fileName"></div>
+  <span><a href="/user-project-json">json</a>
+    <a href="/fetch-files">files</a></span>
 
   <h2>File Tree</h2>
   <div id="fileTree" class="tree"></div>
@@ -34,7 +36,7 @@
   <script>
     // 获取文件夹内容
     async function fetchFolderContents () {
-      const response = await fetch('http://localhost:3001/fetch-files', {
+      const response = await fetch('http://localhost:3010/fetch-files', {
         method: 'GET',
         credentials: 'include' // 确保请求携带cookie
       });
@@ -113,7 +115,7 @@
     // 页面加载完毕后更新 UI
     // document.addEventListener('DOMContentLoaded', updateUI);
     // 发送 POST 请求到服务器获取 folderName
-    fetch('http://localhost:3001/user-file', {
+    fetch('http://localhost:3010/user-file', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

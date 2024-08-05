@@ -25,9 +25,11 @@ export async function initFolderTree() {
     molecule.folderTree.add(folderTreeData)
   }
 }
-// 选择状态
+//  负责处理 FolderTree 的 onSelectFile 事件，选中文件后，在 Editor 中打开
 export function handleSelectFolderTree() {
   molecule.folderTree.onSelectFile((file: IFolderTreeNodeProps) => {
+    console.log('filedata', file.data)
+    console.log('file', transformToEditorTab(file))
     molecule.editor.open(transformToEditorTab(file))
     updateStatusBarLanguage(file.data.language)
   })
@@ -54,6 +56,7 @@ export function updateStatusBarLanguage(language: string) {
 export function handleStatusBarLanguage() {
   const moleculeEditor = molecule.editor
   moleculeEditor.onSelectTab((tabId, groupId) => {
+    console.log(groupId)
     if (!groupId) return
     const group = moleculeEditor.getGroupById(groupId)
     if (!group) return
@@ -62,4 +65,12 @@ export function handleStatusBarLanguage() {
       updateStatusBarLanguage(tab.data!.language!)
     }
   })
+}
+export function handleCreateFile() {
+  molecule.folderTree.onCreate((type, nodeId) => {
+    console.log('[Contrlerl] create file')
+    console.log('type', type, 'nodeId', nodeId)
+  })
+  // const moleculeEditor = molecule.folderTree.onCreate
+  // moleculeEditor.onCreate()
 }

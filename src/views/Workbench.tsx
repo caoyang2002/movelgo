@@ -1,4 +1,4 @@
-// 主页面
+// 主页面：仅定义布局
 import 'reflect-metadata'
 import { container } from 'tsyringe'
 import React from 'react'
@@ -37,7 +37,7 @@ import {
 import { IWorkbench } from '@dtinsight/molecule/esm/model/workbench'
 import { Display, Pane, SplitPane } from '@dtinsight/molecule/esm/components'
 
-import { MySidePane } from './blockchainSidePane'
+import { BlockchainSidePane } from './blockchainSidePane'
 
 const mainBenchClassName = prefixClaName('mainBench')
 const workbenchClassName = prefixClaName('workbench')
@@ -173,7 +173,7 @@ function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
               split="horizontal"
               onChange={handleEditorChanged}
             >
-              <Pane minSize="10%" maxSize="80%">
+              <Pane minSize="20%" maxSize="80%">
                 {/* 编辑器 */}
                 <EditorView />
               </Pane>
@@ -183,7 +183,10 @@ function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
           </SplitPane>
           <div style={{ width: 300 }}>
             {/* 右侧工具栏 */}
-            <Sidebar current={MySidePane.id} panes={[MySidePane]} />
+            <Sidebar
+              current={BlockchainSidePane.id}
+              panes={[BlockchainSidePane]}
+            />
           </div>
         </div>
       </div>

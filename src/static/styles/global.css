@@ -54,22 +54,22 @@ body {
   z-index: 1;
 }
 
-/* -------------------------------------------- */
+/* --------------------- 更改右上角的 logo ----------------------- */
 .mo-menuBar--horizontal__logo > img {
   display: none;
 }
 .mo-menuBar--horizontal__logo::before {
-  content: ''; /* 必须提供，即使为空 */
-  display: block; /* 使伪元素显示为块级元素 */
-  position: relative; /* 绝对定位 */
+  content: '';
+  display: block;
+  position: relative;
 
   color: blue;
   top: 0;
   left: 0;
-  width: 80%; /* 与父元素宽度一致 */
-  height: 80%; /* 与父元素高度一致 */
+  width: 80%;
+  height: 80%;
   background-image: url('../images/MovelgoIcon.svg') !important;
-  background-size: contain; /* 使背景图片适应元素大小 */
-  background-repeat: no-repeat; /* 防止背景图片平铺 */
-  background-position: center center; /* 背景图片居中 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }

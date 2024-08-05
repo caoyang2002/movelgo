@@ -5,8 +5,12 @@ import {
   IFolderTree,
   IFolderTreeNodeProps,
 } from '@dtinsight/molecule/esm/model'
+import { Path } from 'react-router-dom'
+import { FILE_PORT } from 'src/components/port'
 
 const basePath = './mock'
+
+const users_file = `http://localhost:${FILE_PORT}`
 
 interface StateNode {
   code: number
@@ -24,7 +28,7 @@ const api = {
     // return http.get(`${basePath}/folderTree.json`)
     try {
       const response = await axios.get<StateNode>(
-        'http://localhost:3001/user-project-json',
+        `${users_file}/user-project-json`,
         {
           withCredentials: true,
         }
@@ -39,6 +43,65 @@ const api = {
 
   search(value: string) {
     return http.get(`${basePath}/folderTree.json`, { query: value })
+  },
+
+  /**
+   * 保存代码
+   * @param code 代码
+   * @returns
+   */
+
+  //TODO 报错代码的前端请求 API 实现
+  async save_code(fileContent: string, filePath: Path) {
+    // 请求体数据
+    const data = {
+      filePath: filePath,
+      content: fileContent,
+    }
+
+    // 请求头，包含 cookie
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        withCredentials: true,
+      },
+    }
+    try {
+      const response = await axios.post<StateNode>(
+        `${users_file}/save-code`,
+        { data },
+        { headers: config.headers }
+      )
+      console.log('json response: ', response)
+      return response
+    } catch (error) {
+      console.error('Error copilling code:', error)
+      return { code: 500, message: error } as StateNode
+    }
+  },
+
+  //-----------------------------editor
+  //TODO 编译 代码的前端请求 API 实现
+  /**
+   *  编译代码
+   * @param fileContent 代码
+   * @returns
+   */
+  async code_test(fileContent: string) {
+    try {
+      const response = await axios.post<StateNode>(
+        `${users_file}/move/test`,
+        { fileContent },
+        {
+          withCredentials: true,
+        }
+      )
+      console.log('json response: ', response)
+      return response
+    } catch (error) {
+      console.error('Error copilling code:', error)
+      return { code: 500, message: error } as StateNode
+    }
   },
 
   // -------------------------- data source

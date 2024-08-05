@@ -53,7 +53,7 @@ export class CreateAccountView extends React.Component {
             render(item) {
               return (
                 <p>
-                  Create the Database <b>{item.value.name}</b> is success!
+                  Create the Account <b>{item.value.name}</b> is success!
                 </p>
               )
             },

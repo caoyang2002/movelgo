@@ -23,6 +23,7 @@ const useFolderName = () => {
   }
 
   useEffect(() => {
+    const RPC_PORT = process.env.REACT_APP_RPC_PORT || '3020'
     // Get the folderName cookie value
     const folderNameCookie = getCookieByName('folderName')
     console.log('folderName cookie value:', folderNameCookie)
@@ -30,7 +31,7 @@ const useFolderName = () => {
     const fetchFolderName = async () => {
       try {
         const response = await axios.post<ResponseData>(
-          'http://localhost:3001/user-file',
+          `http://localhost:${RPC_PORT}/user-file`,
           {},
           {
             withCredentials: true,

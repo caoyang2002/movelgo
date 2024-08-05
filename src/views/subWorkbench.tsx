@@ -3,7 +3,11 @@ import 'reflect-metadata'
 import { container } from 'tsyringe'
 import React from 'react'
 
-import { EditorView } from '@dtinsight/molecule/esm//workbench/editor'
+import {
+  EditorView,
+  Editor,
+  EditorStatusBarView,
+} from '@dtinsight/molecule/esm/workbench/editor'
 import {
   SidebarView,
   Sidebar,
@@ -12,7 +16,6 @@ import { ActivityBarView } from '@dtinsight/molecule/esm/workbench/activityBar'
 import { StatusBarView } from '@dtinsight/molecule/esm//workbench/statusBar'
 import { PanelView } from '@dtinsight/molecule/esm//workbench/panel'
 import { MenuBarView } from '@dtinsight/molecule/esm/workbench/menuBar'
-
 import { ID_APP } from '@dtinsight/molecule/esm/common/id'
 import { APP_PREFIX } from '@dtinsight/molecule/esm/common/const'
 import {
@@ -37,7 +40,7 @@ import {
 import { IWorkbench } from '@dtinsight/molecule/esm/model/workbench'
 import { Display, Pane, SplitPane } from '@dtinsight/molecule/esm/components'
 
-import { MySidePane } from './blockchainSidePane'
+import { BlockchainSidePane } from './blockchainSidePane'
 
 const mainBenchClassName = prefixClaName('mainBench')
 const workbenchClassName = prefixClaName('workbench')
@@ -175,6 +178,7 @@ function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
             >
               <Pane minSize="10%" maxSize="80%">
                 {/* 编辑器 */}
+
                 <EditorView />
               </Pane>
               <PanelView />
@@ -183,7 +187,10 @@ function WorkbenchView(props: IWorkbench & ILayout & ILayoutController) {
           </SplitPane>
           <div style={{ width: 300 }}>
             {/* 右侧工具栏 */}
-            <Sidebar current={MySidePane.id} panes={[MySidePane]} />
+            <Sidebar
+              current={BlockchainSidePane.id}
+              panes={[BlockchainSidePane]}
+            />
           </div>
         </div>
       </div>

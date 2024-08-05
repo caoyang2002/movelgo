@@ -1,7 +1,7 @@
 // 获取文件夹名称
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
+import { FILE_PORT } from 'src/components/port'
 interface ResponseData {
   message: string
   folderName: string
@@ -33,7 +33,7 @@ const FetchFloderNameByCookie: React.FC = () => {
     console.log('cookie is', document.cookie.split(';'))
     try {
       const response = await axios.post<ResponseData>(
-        'http://localhost:3001/user-file',
+        `http://localhost:${FILE_PORT}/user-file`,
         {
           withCredentials: true,
         }
@@ -50,10 +50,10 @@ const FetchFloderNameByCookie: React.FC = () => {
   return (
     <div>
       <button
-        className="ml-2 px-4 pt-1 pb-1 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 active:bg-blue-800"
+        className="mb-1 mt-1 ml-2 px-4 pt-1 pb-1 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 active:bg-blue-800"
         onClick={fetchUserData}
       >
-        通过 cookie 获取文件夹名称
+        test: 通过 cookie 获取文件夹名称
       </button>
       {cookieValue && <p>Cookie: userFolder={cookieValue}</p>}
       {responseText && <p>Response: {responseText.replace('Message: ', '')}</p>}

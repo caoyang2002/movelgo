@@ -27,7 +27,12 @@ const TgetCode: React.FC = () => {
 
   return (
     <>
-      <button onClick={() => handleEvents()}>CODE</button>
+      <button
+        className="mt-1 mb-1  ml-2 px-4 pt-1 pb-1 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 active:bg-blue-800"
+        onClick={() => handleEvents()}
+      >
+        test:CODE
+      </button>
     </>
   )
 }

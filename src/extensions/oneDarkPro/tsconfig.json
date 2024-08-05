@@ -1,11 +1,11 @@
 {
-  "files": [],
+  // "files": [],
   "references": [
-    {
-      "path": "./src"
-    },
-    {
-      "path": "./scripts"
-    }
+    // {
+    //   "path": "./src"
+    // },
+    // {
+    //   "path": "./scripts"
+    // }
   ]
 }

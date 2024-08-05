@@ -39,6 +39,7 @@ const CreateFile: React.FC = () => {
   }
   return (
     <>
+      <p></p>
       <input
         // className="block w-full py-2 px-3 leading-tight text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
         className="bg-gray-700 pt-1 pb-1 p-2 border border-gray-500 rounded-lg focus:text-white focus:bg-gray-600 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -53,7 +54,7 @@ const CreateFile: React.FC = () => {
         className="ml-2 px-4 pt-1 pb-1 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 active:bg-blue-800"
         onClick={createFile}
       >
-        创建文件
+        t:创建文件
       </button>
     </>
   )
