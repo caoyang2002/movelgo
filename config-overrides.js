@@ -1,21 +1,41 @@
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+const {
+  override,
+  addBabelPreset,
+  addWebpackPlugin,
+  babelInclude,
+} = require('customize-cra')
+const path = require('path')
 
-/* config-overrides.js */
-module.exports = function override(config, env) {
-    //do stuff with the webpack config...
-    config.plugins = [
-        ...config.plugins,
-        new MonacoWebpackPlugin([ 'javascript','typescript','css','html','json' ])
-    ]
-
+module.exports = override(
+  addBabelPreset('@babel/preset-env'),
+  babelInclude([
+    path.resolve('src'),
+    path.resolve('node_modules/@dtinsight/molecule'),
+  ]),
+  addWebpackPlugin(
+    new MonacoWebpackPlugin([
+      'javascript',
+      'typescript',
+      'css',
+      'html',
+      'json',
+      'rust',
+      'cpp',
+      'c',
+      'python',
+      'go',
+    ])
+  ),
+  (config, env) => {
     if (env === 'production') {
-        // remove console in production
-        const TerserPlugin = config.optimization.minimizer.find((i) => i.constructor.name === 'TerserPlugin');
-        if (TerserPlugin) {
-            TerserPlugin.options.terserOptions.compress['drop_console'] = false;
-            console.log('TerserPlugin>>', TerserPlugin);
-        }
+      const TerserPlugin = config.optimization.minimizer.find(
+        (i) => i.constructor.name === 'TerserPlugin'
+      )
+      if (TerserPlugin) {
+        TerserPlugin.options.terserOptions.compress['drop_console'] = false
+      }
     }
-
-    return config;
-}
+    return config
+  }
+)
