@@ -83,7 +83,7 @@ async fn main() -> std::io::Result<()> {
     dotenv::from_path(env_path).ok();
     
     // 从环境变量中读取 PORT，如果没有设置则使用默认值 3020
-    let port = env::var("RPC_PORT").unwrap_or_else(|_| "3020".to_string());
+    let port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
     let address = format!("localhost:{}", port);
  
 

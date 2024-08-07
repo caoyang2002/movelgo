@@ -9,7 +9,7 @@ import dotenv from 'dotenv'
 dotenv.config({ path: path.resolve(process.cwd(), '../.env') })
 
 const app = express()
-const PORT = process.env.FILE_SERVER_PORT || 3010 // 使用环境变量中的 PORT，如果没有则默认为 3010
+const PORT = process.env.REACT_APP_FILE_SERVER_POR || 3010 // 使用环境变量中的 PORT，如果没有则默认为 3010
 console.log(PORT)
 
 // 使用cookieParser中间件
