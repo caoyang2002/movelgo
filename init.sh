@@ -37,9 +37,9 @@ if [[ "$OS" == "Linux" ]]; then
   echo "[CHECK] PIP3"
   # 检查 pip3 是否已安装
   if command -v pip3 >/dev/null 2>&1; then
-    printf "${green}[CHECK] pip3 is already installed.${reset}\n"
+    printf "${green}[STATUS] pip3 is already installed.${reset}\n"
   else
-    printf "${red}[STATUS] pip3 is not installed. Trying to install it.${reset}\n"
+    printf "${yellow}[WARNING] pip3 is not installed. Trying to install it.${reset}\n"
 
     # 检测 Linux 发行版并安装 pip3
     if [ -f /etc/os-release ]; then
@@ -132,11 +132,8 @@ else
 fi
 
 # 定义 Aptos CLI 安装路径
-echo "$USER"
+echo "[INFO] user is: $USER"
 APTOS_CLI_INSTALL_PATH="/home/$USER/.local/bin"
-
-# 输出安装完成信息
-echo "The Aptos CLI (3.5.1) is installed now. Great!"
 
 # 检查 Aptos CLI 是否已经在 PATH 中
 if ! echo "$PATH" | grep -Eq "(^|:)$APTOS_CLI_INSTALL_PATH($|:)"; then
@@ -155,37 +152,30 @@ if ! echo "$PATH" | grep -Eq "(^|:)$APTOS_CLI_INSTALL_PATH($|:)"; then
 
   # 添加 Aptos CLI 到 PATH
   echo "export PATH=\"$APTOS_CLI_INSTALL_PATH:\$PATH\"" >>"$SHELL_CONFIG_FILE"
+  source "$SHELL_CONFIG_FILE"
 
   # 提示用户重新加载配置文件或重启终端
-  echo "Please restart your terminal or run the following command to source the changes:"
+  printf "${red_background}[TIPS] Please restart your terminal or run the following command to source the changes: ${reset}\n"
   echo "source \"$SHELL_CONFIG_FILE\""
 else
-  echo "The Aptos CLI's bin directory is already in your PATH."
+  echo "[INFO] The Aptos CLI's bin directory is already in your PATH."
 fi
 
 # 提供直接调用 Aptos CLI 的完整路径
-echo "Alternatively, you can call the Aptos CLI explicitly with:"
+echo "[INFO] Alternatively, you can call the Aptos CLI explicitly with:"
 echo "$APTOS_CLI_INSTALL_PATH/aptos"
 
 # 测试 Aptos CLI 是否安装成功
-echo "Testing that everything is set up by executing:"
+echo "[TEST] Testing that everything is set up by executing:"
 if aptos info >/dev/null 2>&1; then
-  echo "Aptos CLI is set up correctly and is accessible."
+  echo "[INFO] Aptos CLI is set up correctly and is accessible."
 else
   printf "${red}[ERROR] Error: Aptos CLI is not accessible. Please check your PATH and try again.${reset}\n"
   printf "${green}[TRY] restart your terminal${reset}"
 fi
 
-# # 检查是否安装了 move
-# move_version=$(aptos move --version 2>/dev/null)
-# if [ $? -ne 0 ]; then
-#   echo "Move is not installed."
-#   echo "Starting to install the Move ..."
-# else
-#   echo "Move has been installed: $move_version"
-# fi
-
 # 检查是否安装了 nodejs
+echo "[CHECK] nodejs"
 nodejs_version=$(node --version 2>/dev/null)
 if [ $? -ne 0 ]; then
   echo "Nodejs is not installed."
@@ -220,10 +210,10 @@ install_node_packages() {
   done
 
   if [ -z "$package_manager" ]; then
-    echo "No package manager installed."
+    printf "${yellow}[WARNING] No package manager installed.${reset}\n"
     npm install -g yarn
   else
-    echo "Using $package_manager to install packages.json"
+    printf "[INFO] Using %s to install packages.json\n" $package_manager
   fi
 
   # 检查是否是 bun，因为 bun 的安装命令稍有不同
@@ -231,7 +221,7 @@ install_node_packages() {
     "$package_manager" install
   else
     # 开始安装
-    echo "Starting to install the package.json ..."
+    printf "[INFO] Starting to install the package.json ...\n"
     ###############################################################
 
     # 提示用户输入
@@ -239,27 +229,27 @@ install_node_packages() {
 
     # 判断用户输入
     if [[ $user_input == 'y' || $user_input == 'Y' ]]; then
-      echo "Executing command..."
+      printf "[INFO] Executing command...\n"
       $package_manager install --package-lock-only
     else
-      echo "The command was not executed."
+      printf "${red}[ERROR] The command was not executed.${reset}\n"
     fi
     ###############################################################
   fi
-  printf "${green}[STATUS] Packages installed successfully. %s${reset}\n"
+  printf "${green}[SUCCESS] Packages installed successfully. %s${reset}\n"
 }
 
 # 执行安装
 install_node_packages
 if [ $? -ne 0 ]; then
-  echo "Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually."
+  printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
 fi
 
 # -----------------
 
 # 保存最初的工作目录
 initial_dir="$(pwd)"
-echo "Current directory is: $initial_dir"
+echo "[INFO] Current directory is: $initial_dir"
 
 # 检查 Move 文件夹是否存在，不存在则创建并进入
 if [ ! -d "Move" ]; then
@@ -269,7 +259,7 @@ cd Move || exit # 如果 cd 失败，则退出脚本
 
 # 打印 Move 目录的路径
 Move_dir="$(pwd)"
-printf "Move directory is: %s\n" "$Move_dir"
+printf "[INFO] Move directory is: %s\n" "$Move_dir"
 
 aptos move init --name movelgo
 aptos init --network testnet
