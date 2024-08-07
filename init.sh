@@ -225,12 +225,12 @@ install_node_packages() {
     ###############################################################
 
     # 提示用户输入
-    read -p "Do you want to execute the '$package_manager install --package-lock-only' command? (y/n): " user_input
+    read -p "Do you want to execute the '$package_manager install' command? (y/n): " user_input
 
     # 判断用户输入
     if [[ $user_input == 'y' || $user_input == 'Y' ]]; then
       printf "[INFO] Executing command...\n"
-      $package_manager install --package-lock-only
+      $package_manager install
     else
       printf "${red}[ERROR] The command was not executed.${reset}\n"
     fi
