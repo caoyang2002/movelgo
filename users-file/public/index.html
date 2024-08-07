@@ -34,9 +34,19 @@
   <div id="fileTree" class="tree"></div>
 
   <script>
+
+    const hostname = window.location.hostname;
+    console.log(hostname)
+    const port = window.location.port ? `:${window.location.port}` : '';
+
+    // 构造完整的URL
+    const fullUrl = `http://${hostname}${port}`;
+    console.log('url: ', fullUrl);
     // 获取文件夹内容
+
     async function fetchFolderContents () {
-      const response = await fetch('http://localhost:3010/fetch-files', {
+
+      const response = await fetch(`${fullUrl}/fetch-files`, {
         method: 'GET',
         credentials: 'include' // 确保请求携带cookie
       });
@@ -115,7 +125,7 @@
     // 页面加载完毕后更新 UI
     // document.addEventListener('DOMContentLoaded', updateUI);
     // 发送 POST 请求到服务器获取 folderName
-    fetch('http://localhost:3010/user-file', {
+    fetch(`${fullUrl}/user-file`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
