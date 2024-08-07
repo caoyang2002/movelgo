@@ -6,6 +6,7 @@ use std::str;
 use actix_cors::Cors;
 use dotenv::dotenv;
 use std::env;
+// use std::net::IpAddr;
 
 async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
     println!("[接收 Move 代码] Move code: {:?}", move_code);
@@ -77,25 +78,45 @@ async fn main() -> std::io::Result<()> {
     let current_dir = env::current_dir()?;
     
     // 构建 .env 文件的路径（上移三层目录）
-    let env_path = current_dir.join("../../../.env");
+    let env_path = current_dir.join("../../.env");
+    println!("[INFO] env_path {:?}",env_path);
     
     // 加载 .env 文件
     dotenv::from_path(env_path).ok();
+    // let port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
+
+     // rpc port
+     let rpc_port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
+     println!("[INFO] rpc port: {}", rpc_port);
+
+     // file server port
+     let file_server_port = env::var("REACT_APP_FILE_SERVER_PORT").unwrap_or_else(|_| "3010".to_string());
+     println!("[INFO] file server port: {}", file_server_port);
+
+     // react app port
+     let react_app_port = env::var("REACT_APP_PORT").unwrap_or_else(|_| "3020".to_string());
+    println!("[INFO] app port: {}", react_app_port);
+
+    let host_ip = env::var("REACT_APP_HOST_IP").unwrap_or_else(|_| "localhost".to_string());
     
-    // 从环境变量中读取 PORT，如果没有设置则使用默认值 3020
-    let port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
-    let address = format!("localhost:{}", port);
- 
+   
+    // let address = format!("localhost:{}", port);
+    let rpc_address = format!("http://{}:{}", host_ip, rpc_port);
+    println!("[INFO] rpc address: {}", rpc_address);
+    let file_server_address = format!("http://{}:{}",host_ip,file_server_port);
+    println!("[INFO] file server address: {}", file_server_address);
+    let react_app_address = format!("http://{}:{}",host_ip,react_app_port);
+    println!("[INFO] react app address: {}", react_app_address);
 
     // 启动服务器
-    println!("[服务器将启动在] http://{}", address);
-    HttpServer::new(|| {
+    println!("[INFO] rpc server start on {}", rpc_address);
+    HttpServer::new(move || {
         App::new()
             // 添加CORS中间件
             .wrap(
                 Cors::permissive() // <- 使用 Cors::permissive() 替换 Cors::new()
-                    .allowed_origin("http://localhost:3010")
-                    .allowed_origin("http://localhost:3000") 
+                    .allowed_origin(file_server_address.as_str())
+                    .allowed_origin(react_app_address.as_str()) 
                     .allowed_methods([
                         "POST",
                     ])
@@ -103,7 +124,7 @@ async fn main() -> std::io::Result<()> {
             // 定义路由
             .route("/move_test", web::post().to(compile_and_run_move))
     })
-    .bind(&address)?
+    .bind(&rpc_address)?
     .run()
     .await
 }
