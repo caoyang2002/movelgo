@@ -7,6 +7,7 @@ import { localRead } from '../localStorage'
 function getFilePath() {
   const filePath = localRead('openedFile')
   console.log('[Fetch] File path: ', filePath)
+  return filePath
   // const monacoEditor = molecule.editor.getModel()
   // const model = monacoEditor.getModel();
   // if (model) {

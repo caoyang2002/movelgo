@@ -11,20 +11,41 @@ const FetchFloderNameByCookie: React.FC = () => {
   const [responseText, setResponseText] = useState<string>('')
   const [cookieValue, setCookieValue] = useState<string | null>(null)
 
+  // useEffect(() => {
+  //   const loadCookies = () => {
+  //     console.log('cookie is', document.cookie)
+  //     const cookies = document.cookie
+  //       .split(';')
+  //       .reduce((acc: { [key: string]: string | undefined }, cookie) => {
+  //         const parts = cookie.split('=')
+  //         const key = parts[0].trim()
+  //         const value = decodeURIComponent(parts[1])
+  //         acc[key] = value
+  //         return acc
+  //       }, {})
+  //     setCookieValue(cookies['folderNamee'] || null)
+  //     console.log('userFolder cookie value:', cookies['folderName'])
+  //   }
+  //   loadCookies()
+  // }, [])
+
+  const getCookieByName = (name: string): string | null => {
+    const cookies = document.cookie.split(';')
+    for (let cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split('=').map((c) => c.trim())
+      if (cookieName === name) {
+        return decodeURIComponent(cookieValue)
+      }
+    }
+    return null
+  }
+
+  // 在useEffect中使用这个函数
   useEffect(() => {
     const loadCookies = () => {
-      console.log('cookie is', document.cookie)
-      const cookies = document.cookie
-        .split(';')
-        .reduce((acc: { [key: string]: string | undefined }, cookie) => {
-          const parts = cookie.split('=')
-          const key = parts[0].trim()
-          const value = decodeURIComponent(parts[1])
-          acc[key] = value
-          return acc
-        }, {})
-      setCookieValue(cookies['userFolder'] || null)
-      console.log('userFolder cookie value:', cookies['userFolder'])
+      const folderName = getCookieByName('folderName')
+      console.log('folderName cookie value:', folderName)
+      setCookieValue(folderName)
     }
     loadCookies()
   }, [])

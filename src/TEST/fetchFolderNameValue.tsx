@@ -1,6 +1,7 @@
 // Success
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { FILE_PORT } from 'src/components/port'
 
 interface ResponseData {
   message: string
@@ -23,7 +24,6 @@ const useFolderName = () => {
   }
 
   useEffect(() => {
-    const RPC_PORT = process.env.REACT_APP_RPC_PORT || '3020'
     // Get the folderName cookie value
     const folderNameCookie = getCookieByName('folderName')
     console.log('folderName cookie value:', folderNameCookie)
@@ -31,7 +31,7 @@ const useFolderName = () => {
     const fetchFolderName = async () => {
       try {
         const response = await axios.post<ResponseData>(
-          `http://localhost:${RPC_PORT}/user-file`,
+          `http://localhost:${FILE_PORT}/user-file`,
           {},
           {
             withCredentials: true,

@@ -5,11 +5,13 @@ import fs from 'fs'
 import path from 'path'
 import { convertProjectInfoToTree } from './controllers/projectInfoToJson'
 import axios from 'axios'
+import { useState } from 'react'
 
 const router = express.Router()
 // 指定用户文件夹的存储目录
 const usersBaseDir = path.join(__dirname, './users')
 
+let FOLDERNAME = ''
 /**
  * 中间件，它会在所有匹配的路由处理函数之前执行
  */
@@ -17,6 +19,7 @@ router.use(
   async (req: Request & { folderName?: string }, res: Response, next) => {
     console.log('[操作] 进入中间件')
     let folderName = req.cookies['userFolder'] // 从cookie中获取folderName
+    FOLDERNAME = folderName
 
     if (!folderName) {
       // 如果cookie中没有folderName，则生成新的folderName
@@ -233,26 +236,34 @@ router.post(
   router.post(
     '/save-code',
     (
-      req: Request & { folderName?: string; fileName?: string },
+      req: Request & { fileContent?: string; filePath?: string },
       res: Response
     ) => {
+      let folderName = req.cookies['userFolder'] // 从cookie中获取folderName
       console.log(
-        '[获取] 用户获取 cookie 中携带的 folderName 是：',
-        req.cookies.folderName
+        '[获取](/save-code) 用户获取 cookie 中携带的 folderName 是：',
+        FOLDERNAME
       )
       console.log('请求体内容：', req.body)
 
-      const folderName = req.cookies.folderName
+      // const folderName = req.cookies.folderName
       const filePath = req.body.filePath
-      const fileContent = req.body.content // 假设请求体中包含内容的字段名为 content
+      const fileContent = req.body.fileContent // 假设请求体中包含内容的字段名为 content
 
       if (!folderName || !filePath || !fileContent) {
         return res.status(400).json({ message: '缺少必要的参数' })
       }
+      const childrenFilePath = filePath.replace(/^\s*ROOT\//, '')
+      console.log('childrenFilePath: ', childrenFilePath)
 
       // 构建完整的文件路径
-      const userFolderPath = path.join(__dirname, '../user', folderName)
-      const fullFilePath = path.join(userFolderPath, filePath)
+      const userFolderPath = path.join(
+        __dirname,
+        '../users-file/users',
+        folderName
+      )
+      const fullFilePath = path.join(userFolderPath, childrenFilePath)
+      console.log('fullFilePath', fullFilePath)
 
       try {
         // 确保文件夹存在

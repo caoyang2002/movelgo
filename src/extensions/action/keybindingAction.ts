@@ -6,6 +6,8 @@ import { KeyChord } from 'monaco-editor/esm/vs/base/common/keyCodes'
 import api from 'src/api/index'
 import GetFileContent, { getFileContent } from 'src/components/getCode'
 import getFilePath from 'src/components/getFilePath'
+import axios from 'axios'
+import { FILE_PORT } from 'src/components/port'
 
 export class KeybindingAction extends Action2 {
   static readonly ID = 'AutoSave'
@@ -24,12 +26,37 @@ export class KeybindingAction extends Action2 {
     })
   }
 
-  run(accessor: any, ...args: any[]) {
-    const fileContent = getFileContent()
-    const filePath = getFilePath()
+  async run(accessor: any, ...args: any[]) {
+    const fileContent = await getFileContent()
+    const filePath = await getFilePath()
     alert('Save success!')
-    console.log(fileContent)
-    console.log(filePath)
+    console.log('[fetch](keybindingAction.ts) File content: ', fileContent)
+    console.log('[fetch](keybindingAction.ts) File path: ', filePath)
+    // 发送请求
+    const data = {
+      fileContent: fileContent, // 文件内容
+      filePath: filePath,
+    }
+
+    const config = {
+      credentials: 'include', // 确保请求携带cookie
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    try {
+      console.log('[handle] Save file: ', filePath)
+      const response = await axios.post(
+        `http://localhost:${FILE_PORT}/save-code`,
+        data,
+        config
+      )
+      console.log('服务器响应:', response.data)
+    } catch (error) {
+      console.error('请求失败:', error)
+    }
+
     // const filePath =
     // const save_status = await api.save_code(fileContent)
 
