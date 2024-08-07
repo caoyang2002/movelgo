@@ -1,5 +1,4 @@
 #!/bin/bash
-#color
 # color
 red_background="\033[41m" # 红色背景
 red="\033[31m"            # 红色
