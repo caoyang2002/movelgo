@@ -263,11 +263,18 @@ install_node_packages() {
   printf "${green}[SUCCESS] Packages installed successfully. %s${reset}\n"
 }
 
-# 执行安装
+# 执行安装 /package.json
 install_node_packages
 if [ $? -ne 0 ]; then
   printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
 fi
+
+cd users-file
+install_node_packages
+if [ $? -ne 0 ]; then
+  printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
+fi
+cd ..
 
 echo "[INFO] create the log dirctory"
 mkdir log
