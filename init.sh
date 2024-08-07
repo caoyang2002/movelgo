@@ -31,27 +31,66 @@ else
   printf '%b[WARNING] 未知操作系统%b\n' "$yellow" "$reset" >&1
 fi
 
-# 检查 MAC 是否安装了 brew
-if [[ "$OS" == "Darwin" ]]; then
-  echo '[CHECK] brew'
-  brew_version=$(brew --version 2>/dev/null) # 将错误重定向到 /dev/null
-  if [ $? -ne 0 ]; then
-    printf "%b[STATUS] Brew is not installed%b\n" "$green" "$reset" >&2
-    echo '[INSTALL] Starting to install the Brew ...'
-    # 使用 curl 下载并执行 Homebrew 安装脚本
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    if [ $? -eq 0 ]; then
-      printf "%b[SUCESS] Homebrew installed successfully%b\n" "$green" "$reset" >&1
-    else
-      printf "%b[ERROR] Failed to install Homebrew%b\n" "$red" "$reset" >&2
-    fi
+# 检查 Linux 是否安装了 pip3
+if [[ "$OS" == "Linux" ]]; then
+  # 检查 pip3 是否已安装
+  if command -v pip3 >/dev/null 2>&1; then
+    echo 'pip3 is already installed.'
   else
-    printf "${green}[STATUS] Brew is already installed. Version: %s${reset}\n" "$brew_version"
+    echo 'pip3 is not installed. Trying to install it.'
+
+    # 检测 Linux 发行版并安装 pip3
+    if [ -f /etc/os-release ]; then
+      . /etc/os-release
+
+      case "$ID" in
+      ubuntu | debian)
+        sudo apt-get update && sudo apt-get install -y python3-pip
+        ;;
+      centos)
+        sudo yum install -y python3-pip
+        ;;
+      fedora | rhel)
+        sudo dnf install -y python3-pip
+        ;;
+      *)
+        echo "This script does not support your Linux distribution: $ID"
+        exit 1
+        ;;
+      esac
+    else
+      echo "Unable to determine your Linux distribution. Please install pip3 manually."
+      exit 1
+    fi
+
+    # 检查 pip3 是否成功安装
+    if command -v pip3 >/dev/null 2>&1; then
+      echo 'pip3 installed successfully.'
+    else
+      echo 'Failed to install pip3. Please check the installation manually.'
+      exit 1
+    fi
+  fi
+
+  # 检查 MAC 是否安装了 brew
+  if [[ "$OS" == "Darwin" ]]; then
+    echo '[CHECK] brew'
+    brew_version=$(brew --version 2>/dev/null) # 将错误重定向到 /dev/null
+    if [ $? -ne 0 ]; then
+      printf "%b[STATUS] Brew is not installed%b\n" "$green" "$reset" >&2
+      echo '[INSTALL] Starting to install the Brew ...'
+      # 使用 curl 下载并执行 Homebrew 安装脚本
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      if [ $? -eq 0 ]; then
+        printf "%b[SUCESS] Homebrew installed successfully%b\n" "$green" "$reset" >&1
+      else
+        printf "%b[ERROR] Failed to install Homebrew%b\n" "$red" "$reset" >&2
+      fi
+    else
+      printf "${green}[STATUS] Brew is already installed. Version: %s${reset}\n" "$brew_version"
+    fi
   fi
 fi
-
-# 检查 Ubuntu 是否安装了 apt
-
 # 检查是否安装了 aptos
 echo '[CHECK] APTOS'
 aptos_version=$(aptos --version 2>/dev/null)
@@ -69,6 +108,7 @@ if [ $? -ne 0 ]; then
   fi
 
   if [[ "$OS" == "Linux" ]]; then
+    pip3 install packaging
     curl -fsSL "https://aptos.dev/scripts/install_cli.py" | python3
     if [ $? -ne 0]; then
       wget -qO- "https://aptos.dev/scripts/install_cli.py" | python3
