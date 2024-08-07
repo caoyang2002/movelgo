@@ -99,8 +99,6 @@ async fn main() -> std::io::Result<()> {
 
     let host_ip = env::var("REACT_APP_HOST_IP").unwrap_or_else(|_| "localhost".to_string());
     
-   
-    // let address = format!("localhost:{}", port);
     let rpc_address = format!("http://{}:{}", host_ip, rpc_port);
     println!("[INFO] rpc address: {}", rpc_address);
     let file_server_address = format!("http://{}:{}",host_ip,file_server_port);
