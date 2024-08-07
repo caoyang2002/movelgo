@@ -46,6 +46,8 @@ app.use(express.static(path.join(process.cwd(), 'public')))
 // 使用路由
 app.use(router)
 
-app.listen(() => {
-  console.log(`Server is running on http://${ipAddress}:${FILE_SERVER_PORT}`)
+app.listen(FILE_SERVER_PORT, () => {
+  console.log(
+    `[PASS] Server is running on http://${ipAddress}:${FILE_SERVER_PORT}`
+  )
 })

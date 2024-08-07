@@ -17,11 +17,14 @@ let FOLDERNAME = ''
  */
 router.use(
   async (req: Request & { folderName?: string }, res: Response, next) => {
-    console.log('[操作] 进入中间件')
+    console.log('[HANDLE] Enter middleware')
+
     let folderName = req.cookies['userFolder'] // 从cookie中获取folderName
+    console.log('[INFO] Cookie folderName:', folderName)
     FOLDERNAME = folderName
 
     if (!folderName) {
+      console.log("[HANDLE] set cookie 'userFolder'")
       // 如果cookie中没有folderName，则生成新的folderName
       folderName = generateHash()
       res.cookie('userFolder', folderName, {
@@ -33,7 +36,10 @@ router.use(
     const folderPath = path.join(usersBaseDir, folderName)
 
     if (!fs.existsSync(folderPath)) {
-      console.log('[操作] 用户主文件夹不存在，创建：', folderPath)
+      console.log(
+        '[HANDLE] User home folder does not exist, create it',
+        folderPath
+      )
       fs.mkdirSync(folderPath) // 创建文件夹
       // 创建 Readme.md
       fs.writeFileSync(
@@ -60,13 +66,13 @@ router.get(
       // console.log('[检查] 文件列表:', files)
       convertProjectInfoToTree(req.folderName)
         .then((fileTree) => {
-          console.log('[检查] 文件树:', fileTree)
+          console.log('[CHECK] Files tree:', fileTree)
           const jsonProjectInfo = JSON.stringify(fileTree, null, 2)
           res.json(jsonProjectInfo)
           // console.log(jsonResult)
         })
         .catch((error) => {
-          console.error('转换文件树时发生错误:', error)
+          console.error('[ERROR] 转换文件树时发生错误:', error)
           res.json({
             code: 403,
             message: 'error:' + error.toString,
@@ -88,10 +94,7 @@ router.get(
 router.post(
   '/user-file',
   (req: Request & { folderName?: string }, res: Response) => {
-    console.log(
-      '[获取] 用户获取 cookie 中携带的 folderName 是：',
-      req.folderName
-    )
+    console.log('[INFO] Name of folder in cookie: ', req.folderName)
     res.json({ message: 'User folder set', folderName: req.folderName })
   }
 )

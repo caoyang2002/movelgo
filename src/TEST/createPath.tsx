@@ -1,6 +1,7 @@
 // Success
 import React, { useState } from 'react'
 import axios from 'axios'
+import { HOST_IP, FILE_PORT } from 'src/components/port'
 
 interface FileData {
   // folderName: string
@@ -24,7 +25,7 @@ const CreateFile: React.FC = () => {
     console.log('开始创建文件')
     try {
       const response = await axios.post(
-        'http://localhost:3001/create-file',
+        `http://${HOST_IP}:${FILE_PORT}/create-file`,
         filePath,
         {
           withCredentials: true,

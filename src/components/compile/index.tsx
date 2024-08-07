@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-import { FILE_PORT } from '../../components/port'
+import { FILE_PORT, HOST_IP } from '../../components/port'
 async function compile() {
   const data = {
     content: '这是文件内容', // 文件内容
@@ -15,7 +15,7 @@ async function compile() {
 
   try {
     const response = await axios.post(
-      `http://localhost:${FILE_PORT}/save-code`,
+      `http://${HOST_IP}:${FILE_PORT}/save-code`,
       data,
       config
     )

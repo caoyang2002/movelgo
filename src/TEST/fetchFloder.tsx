@@ -1,7 +1,7 @@
 // 获取文件夹名称
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { FILE_PORT } from '../components/port'
+import { FILE_PORT, HOST_IP } from '../components/port'
 
 interface ResponseData {
   message: string
@@ -34,7 +34,7 @@ const FetchFloderNameByCookie: React.FC = () => {
     console.log('cookie is', document.cookie.split(';'))
     try {
       const response = await axios.get<ResponseData>(
-        `http://localhost:${FILE_PORT}/user-file`,
+        `http://${HOST_IP}:${FILE_PORT}/user-file`,
         {
           withCredentials: true,
         }

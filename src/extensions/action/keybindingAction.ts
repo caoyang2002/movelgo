@@ -7,7 +7,7 @@ import api from 'src/api/index'
 import GetFileContent, { getFileContent } from 'src/components/getCode'
 import getFilePath from 'src/components/getFilePath'
 import axios from 'axios'
-import { FILE_PORT } from 'src/components/port'
+import { FILE_PORT, HOST_IP } from 'src/components/port'
 import molecule from '@dtinsight/molecule'
 import { localize } from '@dtinsight/molecule/esm/i18n/localize'
 
@@ -51,7 +51,7 @@ export class KeybindingAction extends Action2 {
     try {
       console.log('[handle] Save file: ', filePath)
       const response = await axios.post(
-        `http://localhost:${FILE_PORT}/save-code`,
+        `http://${HOST_IP}:${FILE_PORT}/save-code`,
         data,
         config
       )

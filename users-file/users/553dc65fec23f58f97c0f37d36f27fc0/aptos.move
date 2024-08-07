@@ -9,3 +9,4 @@ module 0x42::test{
       (v1, v2, v3)
   }
 }
+

@@ -90,7 +90,8 @@
 //
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { FILE_PORT } from 'src/components/port'
+import { FILE_PORT, HOST_IP } from 'src/components/port'
+
 interface ResponseData {
   message: string
   folderName: string
@@ -123,7 +124,7 @@ const CreateFolder: React.FC = () => {
     try {
       const postData = { content: 'some content' }
       const response = await axios.post<ResponseData>(
-        `http://localhost:${FILE_PORT}/user-file`
+        `http://${HOST_IP}:${FILE_PORT}/user-file`
         // postData,
         // {
         //   withCredentials: true, // 确保请求携带 cookie
@@ -159,7 +160,7 @@ const CreateFolder: React.FC = () => {
     if (cookieValue) {
       try {
         const response = await axios.get<ResponseData>(
-          `http://localhost:${FILE_PORT}/user-file`,
+          `http://${HOST_IP}:${FILE_PORT}/user-file`,
           {
             withCredentials: true, // 确保请求携带 cookie
           }

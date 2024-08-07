@@ -1,7 +1,7 @@
 // 获取文件夹名称
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { FILE_PORT } from 'src/components/port'
+import { FILE_PORT, HOST_IP } from 'src/components/port'
 interface ResponseData {
   message: string
   folderName: string
@@ -34,6 +34,7 @@ const FetchFloderNameByCookie: React.FC = () => {
     for (let cookie of cookies) {
       const [cookieName, cookieValue] = cookie.split('=').map((c) => c.trim())
       if (cookieName === name) {
+        console.log('[INFO] cookie name')
         return decodeURIComponent(cookieValue)
       }
     }
@@ -43,20 +44,21 @@ const FetchFloderNameByCookie: React.FC = () => {
   // 在useEffect中使用这个函数
   useEffect(() => {
     const loadCookies = () => {
-      const folderName = getCookieByName('folderName')
-      console.log('folderName cookie value:', folderName)
+      const folderName = getCookieByName('userFolder')
+      console.log('[INFO] folderName cookie value:', folderName)
       setCookieValue(folderName)
     }
     loadCookies()
   }, [])
 
   const fetchUserData = async () => {
-    console.log('cookie is', document.cookie.split(';'))
+    console.log('[INFO] cookie is', document.cookie.split(';'))
     try {
       const response = await axios.post<ResponseData>(
-        `http://localhost:${FILE_PORT}/user-file`,
+        `http://${HOST_IP}:${FILE_PORT}/user-file`,
         {
           withCredentials: true,
+          credentials: 'include', // 确保请求携带cookie
         }
       )
       setResponseText(

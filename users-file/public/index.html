@@ -36,16 +36,17 @@
   <script>
 
     const hostname = window.location.hostname;
-    console.log(hostname)
+    console.log("[INFO] host name: ", hostname)
     const port = window.location.port ? `:${window.location.port}` : '';
 
     // 构造完整的URL
     const fullUrl = `http://${hostname}${port}`;
-    console.log('url: ', fullUrl);
+    console.log('[INFO] url: ', fullUrl);
     // 获取文件夹内容
 
     async function fetchFolderContents () {
 
+      // 获取文件夹结构的请求
       const response = await fetch(`${fullUrl}/fetch-files`, {
         method: 'GET',
         credentials: 'include' // 确保请求携带cookie
@@ -56,7 +57,7 @@
       }
       const data = await response.json();
       const files = data.files;
-      console.log("files is ", files)
+      console.log("[INFO] files is ", files)
       return files;
     }
 
@@ -114,7 +115,7 @@
       const fileNameElement = document.getElementById('fileName');
       fileNameElement.textContent = fileName;
       const files = await fetchFolderContents();
-      console.log("files is ", files)
+      console.log("[INFO] files is ", files)
       const tree = buildTree(files);
       const treeElement = renderTree(tree);
       document.getElementById('fileTree').appendChild(treeElement);
@@ -134,10 +135,10 @@
       .then(response => response.json())
       .then(data => {
         updateUI(data.folderName); // 使用从服务器返回的 folderName 更新 UI
-        console.log("data is ", data)
+        console.log("[INFO] data is:", data)
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('[ERROR] ', error);
       });
   </script>
 </body>

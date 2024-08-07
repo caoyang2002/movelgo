@@ -13,6 +13,7 @@ import useFolderName from 'src/TEST/fetchFolderNameValue'
 import TgetCode from 'src/TEST/TgetCode'
 import CompileCode from 'src/TEST/compile'
 import SelectExample from 'src/ui_movelgo/selectExample'
+import UserFolderName from 'src/components/cookie'
 // import CreateAndFetchFiles from '@/TEST/createFile'
 
 const Toolbar = molecule.component.Toolbar
@@ -60,6 +61,7 @@ export function BlockchainSidePaneView() {
       <TgetCode />
       <CompileCode />
       <SelectExample />
+
       {/* <CreateFolder /> */}
     </>
   )

@@ -6,12 +6,12 @@ import {
   IFolderTreeNodeProps,
 } from '@dtinsight/molecule/esm/model'
 import { Path } from 'react-router-dom'
-import { FILE_PORT } from 'src/components/port'
+import { FILE_PORT, HOST_IP } from 'src/components/port'
 
 // 使用环境变量或者默认值
-const HOST_IP = process.env.REACT_APP_HOST_IP || 'localhost'
+// const HOST_IP = process.env.REACT_APP_HOST_IP || 'localhost'
 const users_file = `http://${HOST_IP}:${FILE_PORT}`
-console.log('user file: ', users_file)
+console.log('[INFO](api) user file: ', users_file)
 
 const basePath = './mock'
 
@@ -110,6 +110,8 @@ const api = {
     }
   },
 
+  //--------------------------
+  getFolderNameByCookie() {},
   // -------------------------- data source
   getDataSource() {
     return http.get(`${basePath}/dataSource.json`)

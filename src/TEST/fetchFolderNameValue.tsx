@@ -1,7 +1,7 @@
 // Success
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { FILE_PORT } from 'src/components/port'
+import { FILE_PORT, HOST_IP } from 'src/components/port'
 
 interface ResponseData {
   message: string
@@ -31,7 +31,7 @@ const useFolderName = () => {
     const fetchFolderName = async () => {
       try {
         const response = await axios.post<ResponseData>(
-          `http://localhost:${FILE_PORT}/user-file`,
+          `http://${HOST_IP}:${FILE_PORT}/user-file`,
           {},
           {
             withCredentials: true,
