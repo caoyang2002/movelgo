@@ -4,6 +4,7 @@ import cors from 'cors'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
+import os from 'os'
 
 // 加载 .env 文件
 dotenv.config({ path: path.resolve(process.cwd(), '../.env') })
@@ -35,5 +36,15 @@ app.use(express.static(path.join(process.cwd(), 'public')))
 app.use(router)
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+  const interfaces = os.networkInterfaces()
+  const addresses = []
+  for (const dev in interfaces) {
+    for (const details of interfaces[dev]) {
+      if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
+        addresses.push(details.address)
+      }
+    }
+  }
+  const ipAddress = addresses.length > 0 ? addresses[0] : 'localhost'
+  console.log(`Server is running on http://${ipAddress}:${PORT}`)
 })
