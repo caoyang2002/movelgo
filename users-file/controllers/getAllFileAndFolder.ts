@@ -30,4 +30,4 @@ export function getAllFilesAndFolders(folderName: string): string[] {
   return files.map((file) => file.replace(/\.\.\/controllers\//g, '')) // 替换反斜杠为斜杠
 }
 
-console.log(getAllFilesAndFolders('553dc65fec23f58f97c0f37d36f27fc0'))
+// console.log(getAllFilesAndFolders('553dc65fec23f58f97c0f37d36f27fc0'))

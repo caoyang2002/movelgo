@@ -140,12 +140,12 @@ export async function convertProjectInfoToTree(
 }
 
 // 转换并生成 JSON 字符串
-convertProjectInfoToTree('553dc65fec23f58f97c0f37d36f27fc0')
-  .then((fileTree) => {
-    console.log('[检查] 文件树:', fileTree)
-    const jsonResult = JSON.stringify(fileTree, null, 2)
-    console.log(jsonResult)
-  })
-  .catch((error) => {
-    console.error('转换文件树时发生错误:', error)
-  })
+// convertProjectInfoToTree('553dc65fec23f58f97c0f37d36f27fc0')
+//   .then((fileTree) => {
+//     console.log('[检查] 文件树:', fileTree)
+//     const jsonResult = JSON.stringify(fileTree, null, 2)
+//     console.log(jsonResult)
+//   })
+//   .catch((error) => {
+//     console.error('转换文件树时发生错误:', error)
+//   })
