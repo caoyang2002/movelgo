@@ -245,8 +245,11 @@ if [ $? -ne 0 ]; then
   printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
 fi
 
-# -----------------
+echo "[INFO] create the log dirctory"
+mkdir log
 
+# -----------------
+echo "[TEST] aptos move"
 # 保存最初的工作目录
 initial_dir="$(pwd)"
 echo "[INFO] Current directory is: $initial_dir"
