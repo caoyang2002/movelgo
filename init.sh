@@ -35,7 +35,7 @@ fi
 if [[ "$OS" == "Linux" ]]; then
   # 检查 pip3 是否已安装
   if command -v pip3 >/dev/null 2>&1; then
-    echo 'pip3 is already installed.'
+    printf "${green}[CHECK] pip3 is already installed.${reset}"
   else
     printf "${red}[STATUS] pip3 is not installed. Trying to install it.${reset}\n"
 
@@ -54,20 +54,20 @@ if [[ "$OS" == "Linux" ]]; then
         sudo dnf install -y python3-pip
         ;;
       *)
-        echo "This script does not support your Linux distribution: $ID"
+        printf "${red}[ERROR] This script does not support your Linux distribution: %s${reset}" "$ID"
         exit 1
         ;;
       esac
     else
-      echo "Unable to determine your Linux distribution. Please install pip3 manually."
+      printf "${red}[ERROR] Unable to determine your Linux distribution. Please install pip3 manually.${reset}"
       exit 1
     fi
 
     # 检查 pip3 是否成功安装
     if command -v pip3 >/dev/null 2>&1; then
-      echo 'pip3 installed successfully.'
+      printf "${green}[SUCCESS] pip3 installed successfully.${reset}"
     else
-      echo 'Failed to install pip3. Please check the installation manually.'
+      printf "${red}[ERROR] Failed to install pip3. Please check the installation manually.${reset}"
       exit 1
     fi
   fi
