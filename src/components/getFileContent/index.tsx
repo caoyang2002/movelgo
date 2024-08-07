@@ -31,7 +31,7 @@ const GetFileContent: React.FC = () => {
         className="ml-2 px-4 pt-1 pb-1 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-700 active:bg-blue-800"
         onClick={() => handleEvents()}
       >
-        CODEEEE
+        comp: CODE
       </button>
     </>
   )

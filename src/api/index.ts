@@ -47,8 +47,9 @@ const api = {
 
   /**
    * 保存代码
-   * @param code 代码
-   * @returns
+   * @param fileContent 文件内容
+   * @param filePath 编辑的文件路径
+   * @returns 状态码和保存状态
    */
 
   //TODO 报错代码的前端请求 API 实现

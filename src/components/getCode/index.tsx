@@ -3,18 +3,23 @@ import molecule from '@dtinsight/molecule'
 
 // 定义一个异步函数来获取文件内容
 async function getFileContent() {
-  const getGroupEditors = () => {
+  const getEditorInstance = () => {
     const editor = molecule.editor.getGroupById(1)?.editorInstance
     return editor || null
   }
 
-  const editor = getGroupEditors()
+  const editor = getEditorInstance()
   if (editor) {
-    const value = editor.getValue()
-    console.log(value)
-    return value // 返回文件内容
+    const content = editor.getValue()
+    const model = editor.getModel()
+    if (model) {
+      const filePath = model.uri.path
+      console.log('File path:', filePath)
+    }
+    console.log('[Fetch] editor content: \n', content)
+    return content // 返回文件内容
   } else {
-    console.error('未能获取编辑器实例')
+    console.error('[ERROR] 未能获取编辑器实例')
     return null // 如果没有获取到编辑器实例，则返回 null
   }
 }
