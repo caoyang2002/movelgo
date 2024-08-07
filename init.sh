@@ -32,9 +32,9 @@ else
   printf '%b[WARNING] 未知操作系统%b\n' "$yellow" "$reset" >&1
 fi
 
-echo "[CHECK] PIP3"
 # 检查 Linux 是否安装了 pip3
 if [[ "$OS" == "Linux" ]]; then
+  echo "[CHECK] PIP3"
   # 检查 pip3 是否已安装
   if command -v pip3 >/dev/null 2>&1; then
     printf "${green}[CHECK] pip3 is already installed.${reset}\n"
@@ -75,10 +75,9 @@ if [[ "$OS" == "Linux" ]]; then
   fi
 fi
 
-echo '[CHECK] BREW'
 # 检查 MAC 是否安装了 brew
 if [[ "$OS" == "Darwin" ]]; then
-
+  echo '[CHECK] BREW'
   brew_version=$(brew --version 2>/dev/null) # 将错误重定向到 /dev/null
   if [ $? -ne 0 ]; then
     printf "%b[STATUS] Brew is not installed%b\n" "$green" "$reset" >&2
@@ -104,6 +103,7 @@ if [ $? -ne 0 ]; then
   echo "[INSTALL] Starting to install the Aptos ..."
   # 安装 aptos
   if [[ "$OS" == "Darwin" ]]; then
+    echo "[INFO] install mac aptos"
     brew update
     brew install aptos
     if [ $? -ne 0]; then
@@ -114,6 +114,7 @@ if [ $? -ne 0 ]; then
   fi
 
   if [[ "$OS" == "Linux" ]]; then
+    echo "[INFO] install linux aptos"
     sudo apt install python3-packaging
     curl -fsSL "https://aptos.dev/scripts/install_cli.py" | python3
     if [ $? -ne 0]; then
@@ -140,7 +141,7 @@ echo "The Aptos CLI (3.5.1) is installed now. Great!"
 # 检查 Aptos CLI 是否已经在 PATH 中
 if ! echo "$PATH" | grep -Eq "(^|:)$APTOS_CLI_INSTALL_PATH($|:)"; then
   # 将 Aptos CLI 的 bin 目录添加到 PATH
-  echo "Adding the Aptos CLI's bin directory to your PATH environment variable."
+  printf "${blue}[INFO] Adding the Aptos CLI's bin directory to your PATH environment variable.${reset}\n"
 
   # 检测当前使用的 shell 并设置配置文件
   if [ -f "$HOME/.bashrc" ]; then
@@ -148,7 +149,7 @@ if ! echo "$PATH" | grep -Eq "(^|:)$APTOS_CLI_INSTALL_PATH($|:)"; then
   elif [ -f "$HOME/.zshrc" ]; then
     SHELL_CONFIG_FILE="$HOME/.zshrc"
   else
-    echo "Error: Unable to detect the shell configuration file."
+    printf "${red}[ERROR] Unable to detect the shell configuration file.{$reset}\n"
     exit 1
   fi
 
@@ -171,7 +172,8 @@ echo "Testing that everything is set up by executing:"
 if aptos info >/dev/null 2>&1; then
   echo "Aptos CLI is set up correctly and is accessible."
 else
-  echo "Error: Aptos CLI is not accessible. Please check your PATH and try again."
+  printf "${red}[ERROR] Error: Aptos CLI is not accessible. Please check your PATH and try again.${reset}\n"
+  printf "${green}[TRY] restart your terminal${reset}"
 fi
 
 # # 检查是否安装了 move
@@ -231,7 +233,17 @@ install_node_packages() {
     # 开始安装
     echo "Starting to install the package.json ..."
     ###############################################################
-    # "$package_manager" install --package-lock-only
+
+    # 提示用户输入
+    read -p "Do you want to execute the '$package_manager install --package-lock-only' command? (y/n): " user_input
+
+    # 判断用户输入
+    if [[ $user_input == 'y' || $user_input == 'Y' ]]; then
+      echo "Executing command..."
+      $package_manager install --package-lock-only
+    else
+      echo "The command was not executed."
+    fi
     ###############################################################
   fi
   printf "${green}[STATUS] Packages installed successfully. %s${reset}\n"
@@ -261,8 +273,6 @@ printf "Move directory is: %s\n" "$Move_dir"
 
 aptos move init --name movelgo
 aptos init --network testnet
-
-exit_status=$?
 
 if [ $? -ne 0 ]; then
   echo "Error occurred"
