@@ -264,17 +264,34 @@ install_node_packages() {
 }
 
 # 执行安装 /package.json
+printf "[INFO] install editor package.json"
 install_node_packages
 if [ $? -ne 0 ]; then
   printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
 fi
 
+printf "[INFO] install users-file package.json"
 cd users-file
 install_node_packages
 if [ $? -ne 0 ]; then
   printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
 fi
 cd ..
+
+# 安装 ts-node
+printf "[INFO] install ts-node"
+echo -e "${blue}[HANDLE] 开始安装 ts-node...${reset}"
+npm install -g ts-node
+
+# 检查 ts-node 是否已安装
+if ! command -v ts-node &>/dev/null; then
+  echo -e "${red}[ERROR] ts-node 安装失败。${reset}"
+  exit 1
+else
+  echo -e "${green}[SUCCESS] ts-node 安装成功。${reset}"
+fi
+
+echo -e "${yellow}[WRNING] 请重启您的 shell 以确保环境变量已更新。${reset}"
 
 echo "[INFO] create the log dirctory"
 mkdir log
