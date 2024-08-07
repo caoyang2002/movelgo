@@ -1,11 +1,35 @@
 #!/bin/bash
-#
+
+# 使用 uname -s 命令获取系统名称
+OS=$(uname -s)
+
+# 检查系统是否为 Darwin（macOS）或 Linux
+if [[ "$OS" == "Darwin" ]]; then
+  echo "系统是 macOS"
+elif [[ "$OS" == "Linux" ]]; then
+  # 在 Linux 上，进一步检查是否为 Ubuntu
+  if [[ -f /etc/os-release ]]; then
+    # 读取 os-release 文件来判断 Ubuntu
+    . /etc/os-release
+    if [[ "$NAME" == "Ubuntu" ]]; then
+      echo "系统是 Ubuntu"
+    else
+      echo "系统是其他 Linux 发行版"
+    fi
+  else
+    echo "系统是其他 Linux 发行版，但不是 Ubuntu"
+  fi
+else
+  echo "未知操作系统"
+fi
+
 # 检查是否安装了 aptos
 aptos_version=$(aptos --version)
 if [ $? -ne 0 ]; then
   echo "Aptos is not installed."
   echo "Starting to install the Aptos ..."
   echo "//TODO"
+
 else
   echo "Aptos has been installed: $aptos_version"
 fi
