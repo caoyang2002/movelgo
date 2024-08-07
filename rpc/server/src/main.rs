@@ -105,7 +105,7 @@ async fn main() -> std::io::Result<()> {
     println!("[INFO] file server address: {}", file_server_address);
     let react_app_address = format!("http://{}:{}",host_ip,react_app_port);
     println!("[INFO] react app address: {}", react_app_address);
-    let bind_adress = format!("{}:{}", host_ip, rpc_port);
+    let bind_address = format!("{}:{}", host_ip, rpc_port);
     println!("[INFO] bind adress: {}", bind_adress);
     // 启动服务器
     println!("[INFO] rpc server start on {}", rpc_address);
@@ -123,7 +123,7 @@ async fn main() -> std::io::Result<()> {
             // 定义路由
             .route("/move_test", web::post().to(compile_and_run_move))
     })
-    .bind(&bind_adress)?
+    .bind(&bind_address)?
     .run()
     .await
 }
