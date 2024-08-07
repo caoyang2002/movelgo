@@ -106,7 +106,7 @@ async fn main() -> std::io::Result<()> {
     let react_app_address = format!("http://{}:{}",host_ip,react_app_port);
     println!("[INFO] react app address: {}", react_app_address);
     let bind_address = format!("{}:{}", host_ip, rpc_port);
-    println!("[INFO] bind adress: {}", bind_adress);
+    println!("[INFO] bind adress: {}", bind_address);
     // 启动服务器
     println!("[INFO] rpc server start on {}", rpc_address);
     HttpServer::new(move || {
