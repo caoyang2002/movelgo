@@ -280,18 +280,18 @@ cd ..
 
 # 安装 ts-node
 printf "[INFO] install ts-node"
-echo -e "${blue}[HANDLE] 开始安装 ts-node...${reset}"
+echo -e "${blue}[HANDLE] install ts-node...${reset}"
 npm install -g ts-node
 
 # 检查 ts-node 是否已安装
 if ! command -v ts-node &>/dev/null; then
-  echo -e "${red}[ERROR] ts-node 安装失败。${reset}"
+  echo -e "${red}[ERROR] installation the ts-node failed${reset}"
   exit 1
 else
-  echo -e "${green}[SUCCESS] ts-node 安装成功。${reset}"
+  echo -e "${green}[SUCCESS] ts-node install success。${reset}"
 fi
 
-echo -e "${yellow}[WRNING] 请重启您的 shell 以确保环境变量已更新。${reset}"
+echo -e "${yellow}[WRNING] Please restart your shell to ensure the environment variables are updated${reset}"
 
 echo "[INFO] create the log dirctory"
 mkdir log
