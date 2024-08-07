@@ -74,7 +74,7 @@ router.get(
           })
         })
     } catch (error) {
-      res.json({
+      res.status(404).json({
         code: 404,
         message: 'error:' + error.toString,
         folderName: req.folderName,
@@ -274,7 +274,11 @@ router.post(
         // 写入文件
         fs.writeFileSync(fullFilePath, fileContent)
 
-        res.json({ message: 'User folder set', folderName: folderName })
+        res.json({
+          code: 200,
+          message: 'success',
+          folderName: folderName,
+        })
       } catch (error) {
         console.error('保存文件失败：', error)
         res.status(500).json({ message: '服务器内部错误' })

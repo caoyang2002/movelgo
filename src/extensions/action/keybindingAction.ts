@@ -8,6 +8,8 @@ import GetFileContent, { getFileContent } from 'src/components/getCode'
 import getFilePath from 'src/components/getFilePath'
 import axios from 'axios'
 import { FILE_PORT } from 'src/components/port'
+import molecule from '@dtinsight/molecule'
+import { localize } from '@dtinsight/molecule/esm/i18n/localize'
 
 export class KeybindingAction extends Action2 {
   static readonly ID = 'AutoSave'
@@ -29,7 +31,8 @@ export class KeybindingAction extends Action2 {
   async run(accessor: any, ...args: any[]) {
     const fileContent = await getFileContent()
     const filePath = await getFilePath()
-    alert('Save success!')
+    molecule.panel.appendOutput(`Save ${filePath} ...\n`)
+    // alert('Save success!')
     console.log('[fetch](keybindingAction.ts) File content: ', fileContent)
     console.log('[fetch](keybindingAction.ts) File path: ', filePath)
     // 发送请求
@@ -53,8 +56,18 @@ export class KeybindingAction extends Action2 {
         config
       )
       console.log('服务器响应:', response.data)
+      molecule.panel.appendOutput(
+        `Response: \n${JSON.stringify(response.data, null, 2)} \n`
+      )
+      if (200 === response.status) {
+        molecule.panel.appendOutput(localize('move.saveSuccess', '保存成功'))
+        molecule.panel.appendOutput(
+          '\n---------------------------------------\n'
+        )
+      }
     } catch (error) {
       console.error('请求失败:', error)
+      alert(('Save Faild! ERROR: \n' + error) as string)
     }
 
     // const filePath =
