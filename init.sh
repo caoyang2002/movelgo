@@ -7,6 +7,7 @@ yellow="\033[33m"         # 黄色
 blue="\033[34m"           # 蓝色
 reset="\033[0m"           # 重置颜色
 
+echo "[CHECK] OS"
 # 使用 uname -s 命令获取系统名称
 OS=$(uname -s)
 
@@ -31,11 +32,12 @@ else
   printf '%b[WARNING] 未知操作系统%b\n' "$yellow" "$reset" >&1
 fi
 
+echo "[CHECK] PIP3"
 # 检查 Linux 是否安装了 pip3
 if [[ "$OS" == "Linux" ]]; then
   # 检查 pip3 是否已安装
   if command -v pip3 >/dev/null 2>&1; then
-    printf "${green}[CHECK] pip3 is already installed.${reset}"
+    printf "${green}[CHECK] pip3 is already installed.${reset}\n"
   else
     printf "${red}[STATUS] pip3 is not installed. Trying to install it.${reset}\n"
 
@@ -54,44 +56,46 @@ if [[ "$OS" == "Linux" ]]; then
         sudo dnf install -y python3-pip
         ;;
       *)
-        printf "${red}[ERROR] This script does not support your Linux distribution: %s${reset}" "$ID"
+        printf "${red}[ERROR] This script does not support your Linux distribution: %s${reset}\n" "$ID"
         exit 1
         ;;
       esac
     else
-      printf "${red}[ERROR] Unable to determine your Linux distribution. Please install pip3 manually.${reset}"
+      printf "${red}[ERROR] Unable to determine your Linux distribution. Please install pip3 manually.${reset}\n"
       exit 1
     fi
 
     # 检查 pip3 是否成功安装
     if command -v pip3 >/dev/null 2>&1; then
-      printf "${green}[SUCCESS] pip3 installed successfully.${reset}"
+      printf "${green}[SUCCESS] pip3 installed successfully.${reset}\n"
     else
-      printf "${red}[ERROR] Failed to install pip3. Please check the installation manually.${reset}"
+      printf "${red}[ERROR] Failed to install pip3. Please check the installation manually.${reset}"\n
       exit 1
     fi
   fi
+fi
 
-  # 检查 MAC 是否安装了 brew
-  if [[ "$OS" == "Darwin" ]]; then
-    echo '[CHECK] brew'
-    brew_version=$(brew --version 2>/dev/null) # 将错误重定向到 /dev/null
-    if [ $? -ne 0 ]; then
-      printf "%b[STATUS] Brew is not installed%b\n" "$green" "$reset" >&2
-      echo '[INSTALL] Starting to install the Brew ...'
-      # 使用 curl 下载并执行 Homebrew 安装脚本
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      if [ $? -eq 0 ]; then
-        printf "%b[SUCESS] Homebrew installed successfully%b\n" "$green" "$reset" >&1
-      else
-        printf "%b[ERROR] Failed to install Homebrew%b\n" "$red" "$reset" >&2
-        exit 1
-      fi
+echo '[CHECK] BREW'
+# 检查 MAC 是否安装了 brew
+if [[ "$OS" == "Darwin" ]]; then
+
+  brew_version=$(brew --version 2>/dev/null) # 将错误重定向到 /dev/null
+  if [ $? -ne 0 ]; then
+    printf "%b[STATUS] Brew is not installed%b\n" "$green" "$reset" >&2
+    echo '[INSTALL] Starting to install the Brew ...'
+    # 使用 curl 下载并执行 Homebrew 安装脚本
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    if [ $? -eq 0 ]; then
+      printf "%b[SUCESS] Homebrew installed successfully%b\n" "$green" "$reset" >&1
     else
-      printf "${green}[STATUS] Brew is already installed. Version: %s${reset}\n" "$brew_version"
+      printf "%b[ERROR] Failed to install Homebrew%b\n" "$red" "$reset" >&2
+      exit 1
     fi
+  else
+    printf "${green}[STATUS] Brew is already installed. Version: %s${reset}\n" "$brew_version"
   fi
 fi
+
 # 检查是否安装了 aptos
 echo '[CHECK] APTOS'
 aptos_version=$(aptos --version 2>/dev/null)
