@@ -85,17 +85,17 @@ async fn main() -> std::io::Result<()> {
     dotenv::from_path(env_path).ok();
     // let port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
 
-     // rpc port
-     let rpc_port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
-     println!("[INFO] rpc port: {}", rpc_port);
-
+  
+ // react app port
+ let react_app_port = env::var("REACT_APP_PORT").unwrap_or_else(|_| "3020".to_string());
+ println!("[INFO] app port: {}", react_app_port);
      // file server port
      let file_server_port = env::var("REACT_APP_FILE_SERVER_PORT").unwrap_or_else(|_| "3010".to_string());
      println!("[INFO] file server port: {}", file_server_port);
-
-     // react app port
-     let react_app_port = env::var("REACT_APP_PORT").unwrap_or_else(|_| "3020".to_string());
-    println!("[INFO] app port: {}", react_app_port);
+   // rpc port
+   let rpc_port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
+   println!("[INFO] rpc port: {}", rpc_port);
+    
 
     let host_ip = env::var("REACT_APP_HOST_IP").unwrap_or_else(|_| "localhost".to_string());
     
