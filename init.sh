@@ -95,6 +95,30 @@ if [[ "$OS" == "Darwin" ]]; then
   fi
 fi
 
+# 检查是否安装了 Rust
+echo "[CHECK] RUST"
+if ! command -v rustc &>/dev/null; then
+  echo "Starting to install the  Rust ..."
+  # 为不同的操作系统安装 Rust
+  case "$(uname -s)" in
+  Darwin*) # macOS
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    . "$HOME/.cargo/env"
+    ;;
+  Linux*) # Linux
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    . "$HOME/.cargo/env"
+    ;;
+  *)
+    printf "${red}[ERROR] Unsupported operating system${reset}\n"
+    exit 1
+    ;;
+  esac
+else
+  printf "${green}[SUCCESS] Rust is already isntalled${reset}\n"
+  printf "${yellow}[TIPS] You may need to restart the terminal ${reset}\n"
+fi
+
 # 检查是否安装了 aptos
 echo '[CHECK] APTOS'
 aptos_version=$(aptos --version 2>/dev/null)
