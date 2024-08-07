@@ -37,7 +37,7 @@ if [[ "$OS" == "Linux" ]]; then
   if command -v pip3 >/dev/null 2>&1; then
     echo 'pip3 is already installed.'
   else
-    echo 'pip3 is not installed. Trying to install it.'
+    printf "${red}[STATUS] pip3 is not installed. Trying to install it.${reset}\n"
 
     # 检测 Linux 发行版并安装 pip3
     if [ -f /etc/os-release ]; then
@@ -85,6 +85,7 @@ if [[ "$OS" == "Linux" ]]; then
         printf "%b[SUCESS] Homebrew installed successfully%b\n" "$green" "$reset" >&1
       else
         printf "%b[ERROR] Failed to install Homebrew%b\n" "$red" "$reset" >&2
+        exit 1
       fi
     else
       printf "${green}[STATUS] Brew is already installed. Version: %s${reset}\n" "$brew_version"
@@ -103,17 +104,19 @@ if [ $? -ne 0 ]; then
     brew install aptos
     if [ $? -ne 0]; then
       print "%b[ERROR] install faild%d\n" "$red" "$reset" >&2
+      exit 1
     fi
     print "%b[SUCCESS] install success%d\n" "$green" "$reset" >&1
   fi
 
   if [[ "$OS" == "Linux" ]]; then
-    pip3 install packaging
+    sudo apt install python3-packaging
     curl -fsSL "https://aptos.dev/scripts/install_cli.py" | python3
     if [ $? -ne 0]; then
       wget -qO- "https://aptos.dev/scripts/install_cli.py" | python3
       if [ $? -ne 0]; then
         print "%b[ERROR] install faild%d\n" "$red" "$reset" >&2
+        exit 1
       fi
       print "%b[SUCCESS] install success%d\n" "$green" "$reset" >&1
     fi
@@ -121,6 +124,50 @@ if [ $? -ne 0 ]; then
   fi
 else
   printf "${green}[STATUS] Aptos is already installed. Version: %s${reset}\n" "$aptos_version"
+fi
+
+# 定义 Aptos CLI 安装路径
+echo "$USER"
+APTOS_CLI_INSTALL_PATH="/home/$USER/.local/bin"
+
+# 输出安装完成信息
+echo "The Aptos CLI (3.5.1) is installed now. Great!"
+
+# 检查 Aptos CLI 是否已经在 PATH 中
+if ! echo "$PATH" | grep -Eq "(^|:)$APTOS_CLI_INSTALL_PATH($|:)"; then
+  # 将 Aptos CLI 的 bin 目录添加到 PATH
+  echo "Adding the Aptos CLI's bin directory to your PATH environment variable."
+
+  # 检测当前使用的 shell 并设置配置文件
+  if [ -f "$HOME/.bashrc" ]; then
+    SHELL_CONFIG_FILE="$HOME/.bashrc"
+  elif [ -f "$HOME/.zshrc" ]; then
+    SHELL_CONFIG_FILE="$HOME/.zshrc"
+  else
+    echo "Error: Unable to detect the shell configuration file."
+    exit 1
+  fi
+
+  # 添加 Aptos CLI 到 PATH
+  echo "export PATH=\"$APTOS_CLI_INSTALL_PATH:\$PATH\"" >>"$SHELL_CONFIG_FILE"
+
+  # 提示用户重新加载配置文件或重启终端
+  echo "Please restart your terminal or run the following command to source the changes:"
+  echo "source \"$SHELL_CONFIG_FILE\""
+else
+  echo "The Aptos CLI's bin directory is already in your PATH."
+fi
+
+# 提供直接调用 Aptos CLI 的完整路径
+echo "Alternatively, you can call the Aptos CLI explicitly with:"
+echo "$APTOS_CLI_INSTALL_PATH/aptos"
+
+# 测试 Aptos CLI 是否安装成功
+echo "Testing that everything is set up by executing:"
+if aptos info >/dev/null 2>&1; then
+  echo "Aptos CLI is set up correctly and is accessible."
+else
+  echo "Error: Aptos CLI is not accessible. Please check your PATH and try again."
 fi
 
 # # 检查是否安装了 move
