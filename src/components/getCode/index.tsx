@@ -11,11 +11,7 @@ async function getFileContent() {
   const editor = getEditorInstance()
   if (editor) {
     const content = editor.getValue()
-    const model = editor.getModel()
-    if (model) {
-      const filePath = model.uri.path
-      console.log('File path:', filePath)
-    }
+
     console.log('[Fetch] editor content: \n', content)
     return content // 返回文件内容
   } else {
