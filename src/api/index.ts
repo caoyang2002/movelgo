@@ -8,9 +8,14 @@ import {
 import { Path } from 'react-router-dom'
 import { FILE_PORT } from 'src/components/port'
 
+// 使用环境变量或者默认值
+const HOST_IP = process.env.REACT_APP_HOST_IP || 'localhost'
+const users_file = `http://${HOST_IP}:${FILE_PORT}`
+console.log('user file: ', users_file)
+
 const basePath = './mock'
 
-const users_file = `http://localhost:${FILE_PORT}`
+// const users_file = `http://localhost:${FILE_PORT}`
 
 interface StateNode {
   code: number
