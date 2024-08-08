@@ -10,22 +10,15 @@
    1. 使用 `axios` 向 `http://localhost:3010/save-file` 发送请求，参数是 文件内容和路径
 
       ```bash
-      ```
 
-      
+      ```
 
 3. 在 `src/extensions/action/index.ts` 注册 Action
    定义好的 Action 对象，需要使用 ExtensionService 对象的 registerAction 方法进行注册。
 
-
-
 获取编辑器内容
 
 1. 在 `src/extensions/userFolders/folderTreeController.ts ` 中，通过编辑器实例获取到编辑器的内容： https://dtstack.github.io/molecule/zh-CN/docs/api/interfaces/molecule.IEditorService/
-
-    
-
-
 
 获取文件路径
 
@@ -34,11 +27,9 @@
 1. 在 `src/extensions/userFolders/folderTreeController.ts` 添加保存当前打开的文件的路径到本地
 2. 在 `src/components/getFilePath/index.tsx` 定义方法用于从本地获取文件路径
 
+# cookie
 
-
-
-
-
+本地存储的 cookie 名称是 `userFolder`
 
 # 终端输出
 
@@ -48,39 +39,23 @@ import molecule from '@dtinsight/molecule'
 molecule.panel.appendOutput(`Response: \n${response.data} \n`)
 ```
 
-
-
-
-
 ## 国际化
 
 https://dtstack.github.io/molecule/zh-CN/docs/guides/extend-locales
 
 > 切换语言
 >
-> 默认我们提供了2 种方法切换。
+> 默认我们提供了 2 种方法切换。
 >
 > - 第一种：使用 `Command` / `Ctrl + Shift + L` 快捷键
 >
-> - 第二种：打开使用快捷键 `Command` / `Ctrl + ,`  在 Editor 中打开设置（Settings) 面板，修改 JSON 配置中的 locale 字段：
+> - 第二种：打开使用快捷键 `Command` / `Ctrl + ,` 在 Editor 中打开设置（Settings) 面板，修改 JSON 配置中的 locale 字段：
 
 ```bash
 import { localize } from '@dtinsight/molecule/esm/i18n/localize'
 
 name = localize('move.exampleList', '示例列表')
 ```
-
-
-
-
-
-
-
-
-
-
-
-
 
 # 快捷键
 
@@ -89,4 +64,3 @@ name = localize('move.exampleList', '示例列表')
 `C-p` 搜索
 
 `C-S-l` 设置语言
-
