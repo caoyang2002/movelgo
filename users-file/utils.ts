@@ -47,18 +47,18 @@ export class UniqueNumberGenerator {
  */
 export const checkPathType = async (thePath: string) => {
   const fullpath = path.join(usersBaseDir, thePath)
-  console.log('[检查] 开始检查:', thePath)
+  console.log('[CHECK] check start:', thePath)
   try {
     const stats = await fs.promises.stat(fullpath)
     if (stats.isFile()) {
-      console.log('[检查] 类型：文件')
+      console.log('[CHECK] type: file')
       return 'File'
     } else if (stats.isDirectory()) {
-      console.log('[检查] 类型：目录')
+      console.log('[CHECK] type: folder')
       return 'Folder'
     }
   } catch (err) {
-    console.error('[检查] 类型：错误', err)
+    console.error('[ERROR] type: error', err)
     return 'Error'
   }
 }
@@ -70,7 +70,7 @@ export const checkPathType = async (thePath: string) => {
  */
 export const getFileName = (path: string) => {
   const parts = path.split('/')
-  console.log('[获取] 分割文件夹和文件名', parts)
+  console.log('[HANDLE] fetch file name: ', parts)
   const fileName = parts.pop()
   return fileName
 }
@@ -81,7 +81,7 @@ export const getFileName = (path: string) => {
  */
 export const getFolderName = (path: string) => {
   const parts = path.split('/')
-  console.log('[获取] 分割文件夹和文件名', parts)
+  console.log('[HANDLE] fetch folder name: ', parts)
   const folderName = parts[0]
   return folderName
 }
@@ -92,7 +92,7 @@ export const getFolderName = (path: string) => {
  * @returns 文件后缀、内容、创建时间、最后修改时间、大小
  */
 export async function getFileInfo(filePath) {
-  console.log('[检查] 文件路径', filePath)
+  console.log('[INFO] File path', filePath)
   const fullPath = path.join(usersBaseDir, filePath)
   try {
     // 获取文件元数据
@@ -119,7 +119,7 @@ export async function getFileInfo(filePath) {
     }
   } catch (error) {
     // 处理错误
-    console.error('Error:', error)
+    console.error('[ERROR] Error:', error)
     throw error
   }
 }

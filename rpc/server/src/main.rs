@@ -6,10 +6,17 @@ use std::str;
 use actix_cors::Cors;
 use dotenv::dotenv;
 use std::env;
+use serde_json::json;
 // use std::net::IpAddr;
+use regex::Regex;
 
+// 清理终端输出的样式
+fn remove_ansi_escapes(input: &str) -> String {
+    let ansi_escape = Regex::new(r"\x1B\[[0-?]*[ -/]*[@-~]").unwrap();
+    ansi_escape.replace_all(input, "").into_owned()
+}
 async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
-    println!("[接收 Move 代码] Move code: {:?}", move_code);
+    println!("[INFO] Move code: {:?}", move_code);
 
     // 将接收到的 Move 代码写入临时文件
     let move_file = "../move/sources/main.move";
@@ -20,7 +27,7 @@ async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
         match path.parent() {
             Some(parent) => {
                 // 创建父目录
-                fs::create_dir_all(parent).expect("[创建失败] Failed to create directory");
+                fs::create_dir_all(parent).expect("Failed to create directory");
             }
             None => {
                 return HttpResponse::InternalServerError().body("Invalid file path");
@@ -29,46 +36,78 @@ async fn compile_and_run_move(move_code: web::Bytes) -> impl Responder {
 
         // 创建文件
         match fs::File::create(path) {
-            Ok(_) => println!("[创建文件]: {}", move_file),
+            Ok(_) => println!("[HANDLE]: create file {}", move_file),
             Err(e) => {
-                return HttpResponse::InternalServerError().body(format!("[创建失败] Failed to create file: {}", e));
+                return HttpResponse::InternalServerError().body(format!("Failed to create file: {}", e));
             }
         }
     } else {
-        println!("[已存在]: {}", move_file);
+        println!("[ERROR] existed: {}", move_file);
     }
     // let tmp_file = "../move/sources/main.move";
 
     match fs::write(move_file, move_code) {
         Ok(_) => (),
         Err(e) => {
-            return HttpResponse::InternalServerError().body(format!("[写入文件] Failed to write Move code to file: {}", e));
+            return HttpResponse::InternalServerError().body(format!("Failed to write Move code to file: {}", e));
         }
     }
 
     // 编译 Move 代码
-    println!("[开始编译] {}",move_file);
+    println!("[HANDLE] Compiling move code: {}",move_file);
     let compile_output = Command::new("aptos")
     .arg("move")
     .arg("test")
+    .arg("--skip-fetch-latest-git-deps")
     .arg("--package-dir")
     .arg("../move")
     .output();
+  println!("[INFO] Compilation completed");
 
-match compile_output {
-    Ok(ref output) => {
-        if !output.status.success() {
-            let stderr = str::from_utf8(&output.stderr).unwrap_or("Error reading stderr");
-            return HttpResponse::InternalServerError().body(format!("Move compilation failed: {}", stderr));
-        }
+  match compile_output {
+    Ok(output) => {
+        // 打印标准输出
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        println!("[COMPILE STDOUT]:\n{}", stdout);
+
+        // 打印标准错误
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        println!("[COMPILE STDERR]:\n{}", stderr);
+
+
+        let style_less_stdout = remove_ansi_escapes(&stdout.to_string());
+    let style_less_stderr = remove_ansi_escapes(&stderr.to_string());
+    println!("[COMPILE STDOUT]:\n{}", style_less_stdout);
+    println!("[COMPILE STDERR]:\n{}", style_less_stderr);
+        // 构造包含所有信息的响应体
+        let response_body = json!({
+            "success": output.status.success(),
+            // "stdout": stdout.to_string(),
+            // "stderr": stderr.to_string(),
+            "stdout": style_less_stdout,
+            "stderr": style_less_stderr,
+            "exit_code": output.status.code()
+        });
+
+        // 始终返回 200 状态码，但在响应体中包含更多信息
+        HttpResponse::Ok().json(response_body)
     },
     Err(e) => {
-        return HttpResponse::InternalServerError().body(format!("Failed to execute aptos move test command: {}", e));
+        println!("[ERROR] {}", e);
+        
+        // 即使在错误情况下也返回 200 状态码
+        let error_response = json!({
+            "success": false,
+            "error": format!("Failed to execute aptos move test command: {}", e),
+            "stdout": "",
+            "stderr": "",
+            "exit_code": null
+        });
+
+        HttpResponse::Ok().json(error_response)
     }
 }
 
-    // 将运行结果作为响应返回给客户端
-    HttpResponse::Ok().body(String::from_utf8_lossy(&compile_output.unwrap().stdout).to_string())
 }
 
 
@@ -85,7 +124,6 @@ async fn main() -> std::io::Result<()> {
     dotenv::from_path(env_path).ok();
     // let port = env::var("REACT_APP_RPC_PORT").unwrap_or_else(|_| "3020".to_string());
 
-  
  // react app port
  let react_app_port = env::var("REACT_APP_PORT").unwrap_or_else(|_| "3020".to_string());
  println!("[INFO] app port: {}", react_app_port);

@@ -948,6 +948,8 @@ dependencies = [
  "actix-cors",
  "actix-web",
  "dotenv",
+ "regex",
+ "serde_json",
 ]
 
 [[package]]

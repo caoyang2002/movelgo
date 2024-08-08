@@ -35,7 +35,7 @@ const usersBaseDir = path.join(__dirname, '../users')
 function generateId(): number {
   const generator = UniqueNumberGenerator.getInstance()
   const uniqueNumber = generator.generate()
-  console.log(`[获取] 生成唯一数字: ${uniqueNumber}`)
+  console.log(`[HANDLE] unique number: ${uniqueNumber}`)
   return uniqueNumber
 }
 
@@ -62,7 +62,7 @@ function buildJsonInfo(
         .map((part, index, arr) => (index === 0 ? 'ROOT' : part)) // 将数组的第一个元素替换为 'root'
         .join('/') // 重新组合数组元素为一个字符串
 
-      console.log(`[获取] location : ${location}`)
+      console.log(`[INFO] location : ${location}`)
       const newNode = {
         id: generateId(),
         name: entry.name,
@@ -80,7 +80,7 @@ function buildJsonInfo(
 
       if (entry.isDirectory()) {
         parentChildren.push(newNode)
-        console.log(`[获取] 文件夹名称: ${entry.name}`)
+        console.log(`[INFO] Folder name: ${entry.name}`)
         checkDir(entryPath, newNode.children) // 递归检查子文件夹，并将子节点的 children 数组传递给子节点
       } else {
         parentChildren.push(newNode)
@@ -131,7 +131,7 @@ export async function convertProjectInfoToTree(
   try {
     await Promise.all(await buildFileTreeJson(rootNode.children, folderName))
   } catch (error) {
-    console.error('构建文件树时发生错误:', error)
+    console.error('[ERROR] 构建文件树时发生错误:', error)
     state.code = 500
     state.message = 'Error processing file paths'
   }

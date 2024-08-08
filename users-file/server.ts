@@ -3,34 +3,17 @@ import router from './routers'
 import cors from 'cors'
 import path from 'path'
 import cookieParser from 'cookie-parser'
-import dotenv from 'dotenv'
-import os from 'os'
+import { HOST_IP, REACT_APP_PORT, FILE_SERVER_PORT } from './controllers/port'
 
-// 加载 .env 文件
-dotenv.config({ path: path.resolve(process.cwd(), '../.env') })
-const interfaces = os.networkInterfaces()
-const addresses = []
-for (const dev in interfaces) {
-  for (const details of interfaces[dev]) {
-    if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
-      addresses.push(details.address)
-    }
-  }
-}
-const ipAddress = addresses.length > 0 ? addresses[0] : 'localhost'
-console.log('[INFO] ipAddress', ipAddress)
 const app = express()
-const FILE_SERVER_PORT = process.env.REACT_APP_FILE_SERVER_PORT || 3010 // 使用环境变量中的 PORT，如果没有则默认为 3010
-console.log('[INFO] file server port: ', FILE_SERVER_PORT)
-const REACT_APP_PORT = process.env.REACT_APP_PORT || 3000 // 使用环境变量中的 PORT，如果没有则默认为 3010
-console.log('[INFO] react app port: ', REACT_APP_PORT)
+
 // 使用cookieParser中间件
 app.use(cookieParser())
 app.use(express.json())
 
 // 设置允许跨域请求的选项
 const corsOptions = {
-  origin: `http://${ipAddress}:${REACT_APP_PORT}`, // 允许的请求来源
+  origin: `http://${HOST_IP()}:${REACT_APP_PORT()}`, // 允许的请求来源
   credentials: true, // 允许携带认证信息（如cookies）
 }
 
@@ -46,8 +29,8 @@ app.use(express.static(path.join(process.cwd(), 'public')))
 // 使用路由
 app.use(router)
 
-app.listen(FILE_SERVER_PORT, () => {
+app.listen(FILE_SERVER_PORT(), () => {
   console.log(
-    `[PASS] Server is running on http://${ipAddress}:${FILE_SERVER_PORT}`
+    `[PASS] Server is running on http://${HOST_IP()}:${FILE_SERVER_PORT()}`
   )
 })

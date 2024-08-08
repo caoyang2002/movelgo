@@ -42,7 +42,9 @@ const directoryPath =
   '/Users/caoyang/Desktop/IDE/movelgo/users-file/users/553dc65fec23f58f97c0f37d36f27fc0' // 替换为你的文件夹路径
 const filesAndFolders = checkDirectory(directoryPath)
 
-console.log('Files and folders in the directory:')
+console.log('[INFO] Files and folders in the directory:')
 filesAndFolders.forEach((item) => {
-  console.log(`Name: ${item.name}, Path: ${item.path}, Is File: ${item.isFile}`)
+  console.log(
+    `[INFO] Name: ${item.name}, Path: ${item.path}, Is File: ${item.isFile}`
+  )
 })

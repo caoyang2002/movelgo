@@ -6,6 +6,7 @@ import path from 'path'
 import { convertProjectInfoToTree } from './controllers/projectInfoToJson'
 import axios from 'axios'
 import { useState } from 'react'
+import { HOST_IP, RPC_PORT } from './controllers/port'
 
 const router = express.Router()
 // 指定用户文件夹的存储目录
@@ -105,14 +106,14 @@ router.post(
 router.get(
   '/fetch-files',
   (req: Request & { folderName?: string }, res: Response) => {
-    console.log('[获取] 用户获取 folderName', req.folderName)
+    console.log('[INFO] FolderName in request: ', req.folderName)
 
     try {
       const files = getAllFilesAndFolders(req.folderName)
-      console.log('[获取] 文件列表：', files)
+      console.log('[INFO] File list: ', files)
       res.json({ files: files })
     } catch (error) {
-      console.error('Error fetching files:', error)
+      console.error('[ERROR]  fetching files faild:', error)
       res.status(500).json({ message: 'Error fetching files' })
     }
   }
@@ -127,27 +128,33 @@ router.post(
     req: Request & { folderName?: string; fileName?: string },
     res: Response
   ) => {
-    console.log('[获取] 获取用户的主文件夹 folderName：', req.folderName)
+    console.log('[INFO] user folder name：', req.folderName)
     console.log('请求体内容：', req.body)
     const filePath = req.body.filePath
-    console.log('[检查] 文件创建路径：', filePath)
+    console.log('[CHECK] Path to create file', filePath)
 
     // 初始化文件夹路径
     let currentFolderPath = path.join(usersBaseDir, req.folderName)
-    console.log('[检查] 主文件夹绝对路径：', currentFolderPath)
+    console.log('[CHECK] Absolute path to home folder: ', currentFolderPath)
 
     const endsWithSlash = filePath.endsWith('/')
-    console.log('[检查] 文件路径是否以斜杠结尾：', endsWithSlash)
+    console.log(
+      '[CHECK] Whether the file path ends with a slash:',
+      endsWithSlash
+    )
     const containsSlash = filePath.includes('/')
-    console.log('[检查] 文件路径是否包含斜杠：', containsSlash)
+    console.log(
+      '[CHECK] Whether the file path contains slashes:',
+      containsSlash
+    )
     // 创建单个文件
     if (!containsSlash) {
       try {
         // 需要创建的文件路径
-        console.log('[操作] 创建文件：', filePath)
+        console.log('[HANDLE] create the file', filePath)
         const folderPath = path.join(usersBaseDir, req.folderName)
         const fileFullPath = path.join(folderPath, filePath)
-        console.log('[检查] 创建的文件路径：', fileFullPath)
+        console.log('[CHECK] create the file path', fileFullPath)
         if (!fs.existsSync(fileFullPath)) {
           fs.writeFileSync(fileFullPath, '') // 创建空文件
           res.json({
@@ -169,13 +176,13 @@ router.post(
     }
     // 创建单个文件夹
     if (endsWithSlash) {
-      console.log('[操作] 创建单个文件夹：', filePath)
+      console.log('[HANDLE] Create a single folder', filePath)
       const folderPath = path.join(usersBaseDir, req.folderName)
       // 分割字符串
       const folderParts = filePath.split('/')
-      console.log('[获取] 文件夹名称：', folderParts[0])
+      console.log('[INFO] Folder name', folderParts[0])
       const fileFullPath = path.join(folderPath, folderParts[0])
-      console.log('[检查] 创建的文件夹绝对路径：', fileFullPath)
+      console.log('[CHECK] Absolute path to the created folder:', fileFullPath)
 
       try {
         if (!fs.existsSync(fileFullPath)) {
@@ -197,26 +204,29 @@ router.post(
     if (containsSlash && !endsWithSlash) {
       // 分割字符串
       const folderParts = filePath.split('/')
-      console.log('[获取] 文件夹和文件：', folderParts)
+      console.log('[INFO] Folder and file', folderParts)
       // 递归创建文件夹
       try {
         let filePath = ''
         folderParts.forEach((folderPart, index) => {
           filePath = path.join(filePath, folderPart)
-          console.log('[操作] 创建文件夹: ', filePath, 'index: ', index)
+          console.log('[HANDLE] create the folder ', filePath, 'index: ', index)
 
           const fileFullPath = path.join(currentFolderPath, filePath)
 
-          console.log('[检查] 创建的文件(夹)绝对路径：', fileFullPath)
+          console.log(
+            '[INFO] Absolute path of the created file (folder):',
+            fileFullPath
+          )
           // 如果是最后一个元素，创建文件
           if (index === folderParts.length - 1) {
-            console.log('[操作] 创建文件：', filePath)
+            console.log('[HANDLE] create the file', filePath)
 
             fs.writeFileSync(fileFullPath, '')
             return
           }
           if (!fs.existsSync(fileFullPath)) {
-            console.log('[操作] 创建文件夹：', filePath)
+            console.log('[HANDLE] create the file', filePath)
             fs.mkdirSync(fileFullPath)
           }
         })
@@ -243,11 +253,8 @@ router.post(
       res: Response
     ) => {
       let folderName = req.cookies['userFolder'] // 从cookie中获取folderName
-      console.log(
-        '[获取](/save-code) 用户获取 cookie 中携带的 folderName 是：',
-        FOLDERNAME
-      )
-      console.log('请求体内容：', req.body)
+      console.log('[INFO](/save-code) folderName in cookie: ', FOLDERNAME)
+      console.log('[INFO] Request body: ', req.body)
 
       // const folderName = req.cookies.folderName
       const filePath = req.body.filePath
@@ -283,7 +290,7 @@ router.post(
           folderName: folderName,
         })
       } catch (error) {
-        console.error('保存文件失败：', error)
+        console.error('[ERROR] faild to save file', error)
         res.status(500).json({ message: '服务器内部错误' })
       }
     }
@@ -297,23 +304,34 @@ router.post(
     ) => {
       // 定义请求体中的数据
       const moveCode = req.body.fileContent
-      console.log('[获取] 请求体内容：', moveCode)
+      console.log('[INFO] request body: ', moveCode)
       try {
         // 使用 axios 发送 POST 请求到另一个服务器
+        // TODO 更改 IP
         const response = await axios.post(
-          'http://127.0.0.1:3020/move_test',
+          `http://${HOST_IP()}:${RPC_PORT()}/move_test`,
           moveCode
         )
-        console.log('服务器响应:', response.data)
 
+        console.log('[INFO] response data: ', response.data)
+        console.log('[INFO] response standrad output: ', response.data.stdout)
         // 将响应返回给客户端
-        res.json({
-          code: 200,
-          message: '成功',
-          data: response.data,
-        })
+        if (false === response.data.success) {
+          const result = response.data.stdout + '\n' + response.data.stderr
+          res.json({
+            code: 200,
+            message: 'Success',
+            data: result,
+          })
+        } else {
+          res.json({
+            code: 200,
+            message: 'Success',
+            data: response.data.stdout,
+          })
+        }
       } catch (error) {
-        console.error('请求失败:', error)
+        console.error('[ERROR] faild to request:', error)
 
         // 将错误信息返回给客户端
         res.json({
