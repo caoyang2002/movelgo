@@ -31,7 +31,8 @@ for port in "${ports[@]}"; do
   echo -e "${green}[CMD] $command${reset}"
   echo -e "${green}[PID] $pid${reset}"
   if [[ $OS == "Darwin" ]]; then
-    app_name=$(ps -ax | grep $pid | awk 'NR==2 {print $4 " " $5}')
+    # 这里可能有问题 //TODO
+    app_name=$(ps -ax | grep $pid | awk 'NR==1 {print $4 " " $5}')
 
     echo -e "${green}[APP] app name: $app_name ${reset}"
   elif [[ $OS == "Linux" ]]; then
