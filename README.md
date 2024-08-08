@@ -43,6 +43,8 @@ This project is built with React, and Move code is compiled in the backend.
 
 ## :rainbow: Prerequisites (option)
 
+> In the `init.sh`, we have provided a "one-click installation" script, which currently only has versions for Mac and Linux (Ubuntu).
+
 - [Install `Aptos CLI`](https://aptos.dev/en/build/cli)
 
   - MAC
