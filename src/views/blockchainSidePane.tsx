@@ -61,7 +61,6 @@ export function BlockchainSidePaneView() {
       <TgetCode />
       <CompileCode />
       <SelectExample />
-
       {/* <CreateFolder /> */}
     </>
   )

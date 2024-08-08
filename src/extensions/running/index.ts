@@ -6,6 +6,7 @@ import { EDITOR_ACTION_RUNNING, EDITOR_ACTION_GITHUB } from './base'
 import api from '../../api'
 import { useFileContent, getFileContent } from '../../components/getCode'
 import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify'
 // import { ToastContainer, toast } from 'react-toastify';
 export class RunningExtension implements IExtension {
   id: string = ''
@@ -43,8 +44,8 @@ export class RunningExtension implements IExtension {
       switch (menuId) {
         case EDITOR_ACTION_RUNNING.id: {
           // const [content, setContent] = useState(null) // 用于存储文件内容
-          console.log('点击了运行按钮')
-          molecule.panel.appendOutput('Start Move ...\n')
+          console.log('[HANDLE] click running button')
+          molecule.panel.appendOutput('[START] Running Move code ...\n')
           let response
           try {
             molecule.editor.updateActions([
@@ -57,7 +58,7 @@ export class RunningExtension implements IExtension {
             const data = await getFileContent()
             //通过 api 发送给 3010
             response = await api.code_test(data)
-            console.log('编译结果：', response.data)
+            console.log('[INFO] compile result', response.data)
             // const notifySuccess = (message: string) => {
             //   toast.success(message, {
             //     autoClose: 5000, // 弹窗在 5 秒后自动关闭
@@ -73,7 +74,7 @@ export class RunningExtension implements IExtension {
             molecule.panel.appendOutput(response.data.data + '\n')
           } catch (error) {
             molecule.panel.appendOutput(error as string)
-            console.error('获取文件内容失败:', error)
+            console.error('[ERROR] Failed to get file content', error)
           }
 
           molecule.panel.appendOutput('Running finished!\n')
@@ -85,7 +86,7 @@ export class RunningExtension implements IExtension {
               },
             ])
             molecule.panel.appendOutput(
-              'Running end.\n-----------------------------------------------\n'
+              '[END] Running end.\n-----------------------------------------------\n'
             )
           }, 600)
           break

@@ -9,13 +9,10 @@ import { Path } from 'react-router-dom'
 import { FILE_PORT, HOST_IP } from 'src/components/port'
 
 // 使用环境变量或者默认值
-// const HOST_IP = process.env.REACT_APP_HOST_IP || 'localhost'
-const users_file = `http://${HOST_IP}:${FILE_PORT}`
-console.log('[INFO](api) user file: ', users_file)
+const USERS_FILE = `http://${HOST_IP}:${FILE_PORT}`
+console.log('[INFO](api) user file: ', USERS_FILE)
 
 const basePath = './mock'
-
-// const users_file = `http://localhost:${FILE_PORT}`
 
 interface StateNode {
   code: number
@@ -33,7 +30,7 @@ const api = {
     // return http.get(`${basePath}/folderTree.json`)
     try {
       const response = await axios.get<StateNode>(
-        `${users_file}/user-project-json`,
+        `${USERS_FILE}/user-project-json`,
         {
           withCredentials: true,
         }
@@ -74,7 +71,7 @@ const api = {
     }
     try {
       const response = await axios.post<StateNode>(
-        `${users_file}/save-code`,
+        `${USERS_FILE}/save-code`,
         { data },
         { headers: config.headers }
       )
@@ -96,7 +93,7 @@ const api = {
   async code_test(fileContent: string) {
     try {
       const response = await axios.post<StateNode>(
-        `${users_file}/move/test`,
+        `${USERS_FILE}/move/test`,
         { fileContent },
         {
           withCredentials: true,
