@@ -39,6 +39,8 @@ This project is built with React, and Move code is compiled in the backend.
 - [`./rpc`](./rpc/) Move Compilation Service
 - [`./users-file`](./users-file/) File Service
 
+![process](DOC/images/process.png)
+
 # :running: Start the Project
 
 ## :rainbow: Prerequisites (option)
