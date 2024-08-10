@@ -10,7 +10,7 @@ reset="\033[0m"           # 重置颜色
 echo "[CHECK] access to Google"
 
 # 使用 curl 检查 Google 的访问性，忽略输出
-curl -I https://google.com &>/dev/null
+timeout 5 curl -I https://google.com &>/dev/null
 access=$?
 
 if [ $access -ne 0 ]; then
