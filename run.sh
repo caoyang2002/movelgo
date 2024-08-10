@@ -55,7 +55,7 @@ done
 
 # Check if a package manager was found
 if [ -n "$package_manager" ]; then
-  printf "${green}[PASS] Package manager has been installed: %s${reset}\n" $package_manager $package_manager_version
+  printf "${green}[PASS] Package manager has been installed: %s %s ${reset}\n" $package_manager $package_manager_version
 else
   printf "${red}[ERROR] No supported package manager or tool found.${reset}\n"
 fi
@@ -77,6 +77,7 @@ fi
 # fi
 
 # echo $move_version
+
 nodejs_version=$(node --version 2>/dev/null)
 if [ $? -ne 0 ]; then
   printf "${red}[ERROR] Nodejs is not installed.${reset}\n"
@@ -96,7 +97,7 @@ if [ $? -ne 0 ]; then
   printf "%b[ERROR] Move faild%b\n" "$red" "$reset" >&2
   exit 1
 else
-  printf '%b[PASS] Move pass%b\n' "$green" "$reset" >&2
+  printf '%b[PASS] Move useable%b\n' "$green" "$reset" >&2
 fi
 
 cd $CURRENT_DIR

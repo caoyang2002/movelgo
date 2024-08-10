@@ -1,4 +1,5 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+
 const {
   override,
   addBabelPreset,

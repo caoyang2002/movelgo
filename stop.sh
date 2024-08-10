@@ -33,7 +33,7 @@ else
   fi
 fi
 
-# 停止 RPC 服务
+# ------------------------------------------------------------------------- 停止 RPC 服务
 echo -e "${yellow}[STOP] RPC server ...${reset}"
 
 # 尝试杀死 RPC 服务进程
@@ -57,7 +57,6 @@ else
     # 使用SIGKILL信号强制终止进程
     kill -9 $pid
     if [ $? -eq 0 ]; then
-
       printf '%b[SUCCESS] 进程已通过 SIGKILL 信号强制终止。%b\n' "$green" "$reset" >&2
     else
       printf "%b[ERROR] 无法终止进程。\n%b" "$red_background" "$reset" >&2
@@ -65,7 +64,7 @@ else
   fi
 fi
 
-# 停止FileSystem服务
+# ----------------------------------------------------------------------------- 停止FileSystem服务
 
 # 使用 echo 打印停止服务信息
 echo -e "${yellow}[STOP] File system server ...${reset}"
