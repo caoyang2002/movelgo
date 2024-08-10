@@ -19,7 +19,13 @@ if [ $access -ne 0 ]; then
   read -p "[INPUT] Do you want to continue? (y/n): " continue
   if [ "$continue" == "y" ]; then
     printf "${yellow}[WARNING] Continuing. Perhaps when downloading the Aptos CLI, you may need to wait for a long time.${reset}\n"
+    printf "${yellow}[WARNING]If you live in China, you can set your npm and Yarn registry to 'https://registry.npmmirror.com', and set your Git remote URLs to use 'https://gitclone.com'. For example, a repository on GitHub can be cloned using an example URL like: 'https://gitclone.com/github.com/aaa/bbb.git'.${reset}"
+    echo "[COPY] npm config set registry https://registry.npmmirror.com"
+    echo "[COPY] yarn config set registry https://registry.npmmirror.com"
+    echo "[GET] npm/yarn config get registry"
+
   else
+    echo "[EXIT] thanks"
     exit 1
   fi
 else
@@ -115,7 +121,7 @@ if [[ "$OS" == "Darwin" ]]; then
   fi
 fi
 
-# 检查是否安装了 Rust
+# ------------------------------------------------------------------------- 检查是否安装了 Rust
 echo "[CHECK] RUST"
 if ! command -v rustc &>/dev/null; then
   echo "Starting to install the  Rust ..."
@@ -139,7 +145,7 @@ else
   printf "${yellow}[TIPS] You may need to restart the terminal ${reset}\n"
 fi
 
-# 检查是否安装了 aptos
+# ------------------------------------------------------------------------------------ 检查是否安装了 aptos
 echo '[CHECK] APTOS'
 aptos_version=$(aptos --version 2>/dev/null)
 if [ $? -ne 0 ]; then
@@ -218,7 +224,7 @@ else
   printf "${green}[TRY] restart your terminal${reset}"
 fi
 
-# 检查是否安装了 nodejs
+# --------------------------------------------------------------------------------------- 检查是否安装了 nodejs
 echo "[CHECK] nodejs"
 nodejs_version=$(node --version 2>/dev/null)
 if [ $? -ne 0 ]; then
@@ -230,11 +236,11 @@ if [ $? -ne 0 ]; then
     if [ $? -ne 0]; then
       wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
       if [ $? -ne 0]; then
-        print "%b[ERROR] install faild%d\n" "$red" "$reset" >&2
+        printf "%b[ERROR] install faild%d\n" "$red" "$reset" >&2
       fi
-      print "%b[SUCCESS] install success%b\n" "$green" "$reset" >&1
+      printf "%b[SUCCESS] install success%b\n" "$green" "$reset" >&1
     fi
-    print "%b[SUCCESS] install success%b\n" "$green" "$reset" >&1
+    printf "%b[SUCCESS] install success%b\n" "$green" "$reset" >&1
   fi
 else
   printf "${green}[STATUS] Nodejs is already installed. Version: %s${reset}\n" "$nodejs_version"
@@ -252,6 +258,7 @@ install_node_packages() {
       break
     fi
   done
+  # 启动包
 
   if [ -z "$package_manager" ]; then
     printf "${yellow}[WARNING] No package manager installed.${reset}\n"
@@ -269,7 +276,7 @@ install_node_packages() {
     ###############################################################
 
     # 提示用户输入
-    read -p "Do you want to execute the '$package_manager install' command? (y/n): " user_input
+    read -p "[INPUT] Do you want to execute the '$package_manager install' command? (y/n): " user_input
 
     # 判断用户输入
     if [[ $user_input == 'y' || $user_input == 'Y' ]]; then
@@ -284,7 +291,9 @@ install_node_packages() {
 }
 
 # 执行安装 /package.json
-printf "[INFO] install editor package.json"
+printf "[INFO] install editor package.json\n"
+echo "[HANDLE] If you did not install yarn, it will be installed now."
+npm install -g yarn
 install_node_packages
 if [ $? -ne 0 ]; then
   printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
