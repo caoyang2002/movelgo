@@ -7,6 +7,29 @@ yellow="\033[33m"         # 黄色
 blue="\033[34m"           # 蓝色
 reset="\033[0m"           # 重置颜色
 
+echo "[CHECK] access to Google"
+
+# 使用 curl 检查 Google 的访问性，忽略输出
+curl -I https://google.com &>/dev/null
+access=$?
+
+if [ $access -ne 0 ]; then
+  # 如果访问失败，提示用户
+  printf "${red_background}[ERROR] Do you have a network issue or is Google not accessible? Consider checking if you need to turn on the VPN.${reset}\n"
+  read -p "[INPUT] Do you want to continue? (y/n): " continue
+  if [ "$continue" == "y" ]; then
+    printf "${yellow}[WARNING] Continuing. Perhaps when downloading the Aptos CLI, you may need to wait for a long time.${reset}\n"
+  else
+    exit 1
+  fi
+else
+  # 如果访问成功，打印一条消息
+  printf "${green}[SUCCESS] Have access to Google.${reset}\n"
+fi
+
+# 根据需要，可以删除或注释掉这一行
+exit 1
+
 echo "[CHECK] OS"
 # 使用 uname -s 命令获取系统名称
 OS=$(uname -s)
@@ -278,10 +301,10 @@ if [ $? -ne 0 ]; then
 fi
 cd ..
 
-# 安装 ts-node
-printf "[INFO] install ts-node"
+# ---------------------------------------------------------------------------- 安装 ts-node
+printf "[INFO] install ts-node\n"
 echo -e "${blue}[HANDLE] install ts-node...${reset}"
-npm install -g ts-node
+sudo npm install -g ts-node
 
 # 检查 ts-node 是否已安装
 if ! command -v ts-node &>/dev/null; then
