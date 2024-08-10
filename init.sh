@@ -27,9 +27,6 @@ else
   printf "${green}[SUCCESS] Have access to Google.${reset}\n"
 fi
 
-# 根据需要，可以删除或注释掉这一行
-exit 1
-
 echo "[CHECK] OS"
 # 使用 uname -s 命令获取系统名称
 OS=$(uname -s)
