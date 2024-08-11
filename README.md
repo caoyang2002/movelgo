@@ -1,4 +1,9 @@
 <a name="top"></a>
+[![beta](https://img.shields.io/badge/beta-669900)](#top)
+
+![MOVELGO](./DOC/images/MovelgoIcon.png)
+![now editor](./DOC/images/now.png)
+
 [![简体中文](https://img.shields.io/badge/简体中文-00bb99)](./DOC/README_zh.md)
 
 [![English](https://img.shields.io/badge/English-ff4411)](./README.md)
@@ -10,6 +15,34 @@ There are many developers who are new to web3 and do not know how to start their
 We hope to provide developers with a simple and convenient development, testing, and deployment environment through an integrated web development environment. In the later stage, we hope to achieve the features in the Move compiler that are inaccessible for security reasons but extremely important for understanding the compiled code.
 
 Thank you for your reading, thank you again!
+
+# 🚀 Start
+
+- `./init.sh` Initialize the project
+
+  > download Aptos CLI, Rust, TypeScript Node, Yarn, NVM, and install dependencies from `package.json`.
+
+- `./run.sh` Start the project
+
+  > check the package manager and start the RPC server, file server, and editor.
+
+- `./status.sh` Check the running status
+
+  > check if there are any processes running on ports 3000, 3010, and 3020.
+
+- `./stop.sh` Stop the running project
+  > stop the programs running on ports 3000, 3010, and 3020.
+
+## 🚦 Shortcut Keys
+
+> - `Ctrl` / `Command` => `C`
+> - `Shift` => `S`
+
+- `C-K` Set Theme
+
+- `C-P` Search
+
+- `C-S-L` Set Language
 
 ## :computer: About the Project
 
