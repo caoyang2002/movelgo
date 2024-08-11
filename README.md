@@ -1,5 +1,7 @@
 <a name="top"></a>
 [![beta](https://img.shields.io/badge/beta-669900)](#top)
+<br/>
+Language:
 [![简体中文](https://img.shields.io/badge/简体中文-00bb99)](./DOC/README_zh.md)
 [![English](https://img.shields.io/badge/English-ff4411)](./README.md)
 
