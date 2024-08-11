@@ -1,19 +1,12 @@
 <a name="top"></a>
 [![beta](https://img.shields.io/badge/beta-669900)](#top)
+[![简体中文](https://img.shields.io/badge/简体中文-00bb99)](./DOC/README_zh.md)
+[![English](https://img.shields.io/badge/English-ff4411)](./README.md)
 
 <img src="./DOC/images/MovelgoIcon.png" style="width:40%; display:block; text-align:center; margin-left:auto; margin-right:auto;" />
 <br/>
 
 ![now editor](./DOC/images/now.png)
-
-<div style="display: flex; align-items: center; gap: 2px;">
-  <a href="./DOC/README_zh.md" style="margin: 2px;">
-    <img src="https://img.shields.io/badge/简体中文-00bb99" alt="Simplified Chinese">
-  </a>
-  <a href="./README.md" style="margin: 2px;">
-    <img src="https://img.shields.io/badge/English-ff4411" alt="English">
-  </a>
-</div>
 
 # Preface
 
