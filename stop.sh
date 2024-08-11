@@ -92,5 +92,5 @@ else
       printf '%b[ERROR] FileSystem 服务停止失败%b\n' "$red_background" "$reset" >&2
     fi
   fi
-  printf '%b[SUCCESS] 所有服务已停止！%b\n' "\033[32m" "\033[0m" >&2
+  printf "${green}[SUCCESS] 所有服务已停止！${reset}\n" >&2
 fi

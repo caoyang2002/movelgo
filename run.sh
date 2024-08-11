@@ -28,7 +28,7 @@ get_ip_address() {
     ip_address="localhost"
     ;;
   esac
-  echo "$ip_address"
+  echo $ip_address
 }
 
 # 调用函数并获取 IP 地址
@@ -67,17 +67,7 @@ if [ $? -ne 0 ]; then
 else
   printf "${green}[PASS] Aptos has been installed: $aptos_version ${reset}\n"
 fi
-# aptos move
-# move_version=$(aptos move --version 2>/dev/null)
-
-# if [ $? -ne 0 ]; then
-#   printf "${red}[ERROR] Move is not installed.${reset}\n"
-# else
-#   printf "${green}[PASS] Move has been installed: %s${reset}\n" $move_version
-# fi
-
-# echo $move_version
-
+# nodejs
 nodejs_version=$(node --version 2>/dev/null)
 if [ $? -ne 0 ]; then
   printf "${red}[ERROR] Nodejs is not installed.${reset}\n"
@@ -105,17 +95,39 @@ cd $CURRENT_DIR
 # ============================================================ 启动
 # ------------------------------------------------------------ ui
 echo "[START] UI"
-nohup yarn start >log/editor.log 2>&1 &
-if [ $? -ne 0 ]; then
-  printf "%b[ERROR] UI 启动失败%b\n" "$red_background" "$reset" >&2
-  exit 1
-else
-  OS=$(uname -s)
-  # 读取 REACT_APP_PORT 环境变量，如果没有设置则默认为 3000
-  port=${REACT_APP_PORT:-3010}
+#!/bin/bash
 
-  printf "${green}[PASS] UI start on: %s://%s:%s${reset}\n" "http" "$ip" "$port" >&2
+# 检查 package.json 文件是否存在
+if [ ! -f "package.json" ]; then
+  printf "${red}[ERROR] Error: package.json not found.${reset}\n"
+  exit 1
 fi
+
+# 检查项目使用的包管理器，并启动项目
+if command -v pnpm >/dev/null 2>&1; then
+  # 如果系统中安装了 pnpm，使用 pnpm 启动
+  printf "${blue}[START] UI with pnpm${reset}\n"
+  nohup pnpm start >log/editor.log 2>&1 &
+elif command -v yarn >/dev/null 2>&1; then
+  # 如果系统中安装了 yarn，使用 yarn 启动
+  printf "${blue}[START] UI with yarn${reset}\n"
+  nohup yarn start >log/editor.log 2>&1 &
+elif command -v npm >/dev/null 2>&1; then
+  # 如果系统中安装了 npm，使用 npm 启动
+  printf "${blue}[START] UI with npm${reset}\n"
+  nohup npm start >log/editor.log 2>&1 &
+else
+  printf "${red}[ERROR]Error: No package manager found.${reset}\n"
+  exit 1
+fi
+
+printf "${green}[SUCCESS] UI started successfully.${reset}\n"
+
+OS=$(uname -s)
+# 读取 REACT_APP_PORT 环境变量，如果没有设置则默认为 3000
+port=${REACT_APP_PORT:-3010}
+printf "${green}[PASS] UI start on: %s://%s:%s${reset}\n" "http" "$ip" "$port" >&2
+
 cd $CURRENT_DIR
 
 # ------------------------------------------------- rpc
@@ -123,7 +135,7 @@ echo "[START] RPC"
 cd rpc/server
 nohup cargo run >../../log/rpc.log 2>&1 &
 if [ $? -ne 0 ]; then
-  printf "%b[ERROR] RPC faild%b\n" "$red" "$reset" >&2
+  printf "%b[ERROR] RPC running faild%b\n" "$red" "$reset" >&2
   exit 1
 else
   port=${REACT_APP_RPC_PORT:-3020}
@@ -136,7 +148,7 @@ echo "[START] File System"
 cd users-file
 nohup ts-node server.ts >../log/file-server.log 2>&1 &
 if [ $? -ne 0 ]; then
-  printf "%b[ERROR] FileSystem faild%b\n" "$red" "$reset" >&2
+  printf "%b[ERROR] FileSystem running faild%b\n" "$red" "$reset" >&2
   exit 1
 else
   port=${REACT_APP_FILE_SERVER_PORT:-3010}

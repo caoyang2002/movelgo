@@ -20,6 +20,8 @@ if [ $access -ne 0 ]; then
   if [ "$continue" == "y" ]; then
     printf "${yellow}[WARNING] Continuing. Perhaps when downloading the Aptos CLI, you may need to wait for a long time.${reset}\n"
     printf "${yellow}[WARNING]If you live in China, you can set your npm and Yarn registry to 'https://registry.npmmirror.com', and set your Git remote URLs to use 'https://gitclone.com'. For example, a repository on GitHub can be cloned using an example URL like: 'https://gitclone.com/github.com/aaa/bbb.git'.${reset}"
+    echo "[GIT-CLONE] git clone https://gitclone.com/github.com/caoyang2002/movelgo.git"
+    echo "[GIT-PULL]  git pull https://gitclone.com/github.com/caoyang2002/movelgo.git"
     echo "[COPY] npm config set registry https://registry.npmmirror.com"
     echo "[COPY] yarn config set registry https://registry.npmmirror.com"
     echo "[GET] npm/yarn config get registry"
@@ -262,7 +264,7 @@ install_node_packages() {
 
   if [ -z "$package_manager" ]; then
     printf "${yellow}[WARNING] No package manager installed.${reset}\n"
-    npm install -g yarn
+    sudo npm install -g yarn
   else
     printf "[INFO] Using %s to install packages.json\n" $package_manager
   fi
@@ -290,10 +292,13 @@ install_node_packages() {
   printf "${green}[SUCCESS] Packages installed successfully. %s${reset}\n"
 }
 
+# 安装 yarn
+echo "[HANDLE] If you did not install yarn, it will be installed now."
+sudo npm install -g yarn
+
 # 执行安装 /package.json
 printf "[INFO] install editor package.json\n"
-echo "[HANDLE] If you did not install yarn, it will be installed now."
-npm install -g yarn
+
 install_node_packages
 if [ $? -ne 0 ]; then
   printf "${yallow}[WARNING] Node.js has been detected as installed, but the package manager is unavailable. Please check for errors and install the package manager manually.${reset}\n"
