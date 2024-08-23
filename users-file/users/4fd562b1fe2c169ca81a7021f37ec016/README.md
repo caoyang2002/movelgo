@@ -1,1 +1,0 @@
-This is your personal folder. You can store your files here.

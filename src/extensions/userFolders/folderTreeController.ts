@@ -107,6 +107,7 @@ export function handleCreateFile() {
           '[SUCCESS] folderTreeController.tsx \t 创建成功：',
           response.data
         )
+        window.location.reload()
         // setResponseText(`File created: ${response.data.filePath}`)
       } catch (error) {
         console.log('[FAIL] folderTreeController.tsx \t 创建失败：', error)
@@ -137,6 +138,7 @@ export function handleCreateFile() {
           '[SUCCESS] folderTreeController.tsx \t 创建成功：',
           response.data
         )
+        window.location.reload()
         // setResponseText(`File created: ${response.data.filePath}`)
       } catch (error) {
         console.log('[FAIL] folderTreeController.tsx \t 创建失败：', error)
@@ -163,6 +165,7 @@ export function handleCreateFile() {
         '[SUCCESS] folderTreeController.tsx \t updata：',
         response.data
       )
+
       // setResponseText(`File created: ${response.data.filePath}`)
     } catch (error) {
       console.log('[FAIL] folderTreeController.tsx \t update：', error)
