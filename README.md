@@ -26,7 +26,7 @@ Thank you for your reading, thank you again!
 
 - `./run.sh` Start the project
 
-  > check the package manager and start the RPC server, file server, and editor.
+  > check the package manager and start the complier server, file server, and editor UI.
 
 - `./status.sh` Check the running status
 
