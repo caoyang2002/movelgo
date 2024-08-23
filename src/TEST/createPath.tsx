@@ -22,7 +22,8 @@ const CreateFile: React.FC = () => {
   }
   // 处理创建文件
   const createFile = async () => {
-    console.log('开始创建文件')
+    console.log('[INFO] test/createPath.tsx \t 开始创建文件: ', filePath)
+
     try {
       const response = await axios.post(
         `http://${HOST_IP}:${FILE_PORT}/create-file`,

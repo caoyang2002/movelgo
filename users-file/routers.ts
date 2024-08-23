@@ -113,14 +113,76 @@ router.get(
       console.log('[INFO] File list: ', files)
       res.json({ files: files })
     } catch (error) {
-      console.error('[ERROR]  fetching files faild:', error)
+      console.error('[ERROR] fetching files faild:', error)
       res.status(500).json({ message: 'Error fetching files' })
     }
   }
 )
+/**
+ *  重命名文件
+ */
+router.post(
+  '/rename-file',
+  (
+    req: Request & { folderName?: string; fileName?: string },
+    res: Response
+  ) => {
+    console.log('[HANDLE] entry routers.ts >> rename-file')
+    console.log(
+      '[INFO] routers.ts >> rename-file \t user folder name: ',
+      req.folderName
+    )
+    console.log('[INFO] routers.ts >> rename-file \t request body', req.body)
+    // 获取需要修改的文件名
 
+    // 获取原始文件路径和新文件名
+    console.log(__dirname)
+    const userPath = __dirname + '/users/' + req.folderName
+    const oldPathName = userPath + '/' + req.body.location.replace('ROOT/', '')
+    const newPathName = userPath + '/' + req.body.name
+
+    console.log(
+      '[INFO] routers.ts >> rename-file \t \nold file name: ',
+      oldPathName,
+      '\nnew path name: ',
+      newPathName
+    )
+    const location = req.body.location
+    const fileName = req.body.name
+    if ('Folder' === req.body.fileType) {
+      console.log(
+        '[HANDLE] routers.ts >> rename-file \t rename the folder',
+        location,
+        fileName
+      )
+    } else if ('File' === req.body.fileType) {
+      console.log(
+        '[HANDLE] routers.ts >> rename-file \t rename the file',
+        location,
+        fileName
+      )
+      fs.rename(oldPathName, newPathName, (err) => {
+        if (err) {
+          return res.status(500).send({
+            message: '重命名失败',
+            code: '500',
+            error: err,
+            fileName: fileName,
+          })
+        }
+        res.send({ message: '文件重命名成功', code: '200', fileName: fileName })
+      })
+    } else {
+      console.log('[ERROR] routers.ts >> rename-file \t unknown file type')
+      res.status(500).json({ message: 'Error rename file', code: '200' })
+    }
+  }
+)
 /**
  * 创建文件
+ * @requires folderName - 文件夹名称
+ * @requires fileName - 文件名称
+ * 支持创建单个文件和单个文件夹，以及创建多级文件
  */
 router.post(
   '/create-file',

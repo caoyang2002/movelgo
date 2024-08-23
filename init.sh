@@ -21,11 +21,9 @@ if [ $access -ne 0 ]; then
     printf "${yellow}[WARNING] Continuing. Perhaps when downloading the Aptos CLI, you may need to wait for a long time.${reset}\n"
     printf "${yellow}[WARNING]If you live in China, you can set your npm and Yarn registry to 'https://registry.npmmirror.com', and set your Git remote URLs to use 'https://gitclone.com'. For example, a repository on GitHub can be cloned using an example URL like: 'https://gitclone.com/github.com/aaa/bbb.git'.${reset}"
     echo "[GIT-CLONE] git clone https://gitclone.com/github.com/caoyang2002/movelgo.git"
-    echo "[GIT-PULL]  git pull https://gitclone.com/github.com/caoyang2002/movelgo.git"
     echo "[COPY] npm config set registry https://registry.npmmirror.com"
     echo "[COPY] yarn config set registry https://registry.npmmirror.com"
     echo "[GET] npm/yarn config get registry"
-
   else
     echo "[EXIT] thanks"
     exit 1
@@ -54,7 +52,6 @@ elif [[ "$OS" == "Linux" ]]; then
     fi
   else
     printf '%b[STATUS] 系统是其他 Linux 发行版，但不是 Ubuntu%b\n' "$green" "$reset" >&1
-
   fi
 else
   printf '%b[WARNING] 未知操作系统%b\n' "$yellow" "$reset" >&1
@@ -340,7 +337,8 @@ echo "[INFO] Current directory is: $initial_dir"
 if [ ! -d "Move" ]; then
   mkdir -p Move
 fi
-cd Move || exit # 如果 cd 失败，则退出脚本
+
+cd Move || exit 1 # 如果 cd 失败，则退出脚本
 
 # 打印 Move 目录的路径
 Move_dir="$(pwd)"
@@ -350,11 +348,8 @@ aptos move init --name movelgo
 aptos init --network testnet
 
 if [ $? -ne 0 ]; then
-  echo "Error occurred"
-  # 可以在这里执行相应的错误处理逻辑
+  printf "${red}[ERROR] Error occurred${reset}\n"
 fi
 
-# 删除最初的工作目录中的 Move 文件夹（如果需要的话）
-rm -rf "$initial_dir/Move" # 注意：这里使用最初的目录路径来指定删除位置
-# 返回最初的工作目录
+rm -rf "$initial_dir/Move"
 cd "$initial_dir"

@@ -44,7 +44,7 @@ for port in "${ports[@]}"; do
   echo "--------------------------"
 done
 
-echo "端口检查完成。"
+echo "Port check completed."
 
 # lsof -i :3000 | awk '{print $2}'
 # lsof -p 59063 -Fn | awk 'NR==2{print}' | sed "s/n\//\//"
