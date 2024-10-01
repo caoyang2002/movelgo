@@ -47,3 +47,6 @@ deps/
 
 # Target folder for cross compiled artifacts
 target/
+
+# user files
+users/
