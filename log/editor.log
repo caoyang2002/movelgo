@@ -1,0 +1,240 @@
+
+> movelgo@0.1.0 start /Users/simons/Documents/GitHub/movelgo
+> PORT=$(dotenv get REACT_APP_PORT) react-app-rewired  start
+
+sh: dotenv: command not found
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+(node:6926) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:6926) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Compiled with warnings.
+
+[eslint] 
+src/TEST/createPath.tsx
+  Line 18:13:  'name' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/api/index.ts
+  Line 5:3:  'IFolderTree' is defined but never used           @typescript-eslint/no-unused-vars
+  Line 6:3:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/getFilePath/index.tsx
+  Line 2:8:   'React' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 2:17:  'useEffect' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 3:8:   'molecule' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 4:10:  'Float' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 4:17:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 5:10:  'transformToEditorTab' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/action/keybindingAction.ts
+  Line 6:8:  'api' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 7:8:  'GetFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/exampleController.tsx
+  Line 1:8:  'molecule' is defined but never used      @typescript-eslint/no-unused-vars
+  Line 4:3:  'IEditorTab' is defined but never used    @typescript-eslint/no-unused-vars
+  Line 5:3:  'ISidebarPane' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 6:3:  'IMenuBarItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/index.tsx
+  Line 8:3:  'createDataSourceMenuItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/running/index.ts
+  Line 7:10:  'useFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 9:10:  'toast' is defined but never used           @typescript-eslint/no-unused-vars
+
+src/extensions/userFolders/folderTreeController.ts
+  Line 11:10:  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/blockchainSidePane.tsx
+  Line 16:8:  'UserFolderName' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/terminal/terminalPanelView.tsx
+  Line 2:53:    'useState' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  Line 4:10:    'ITheme' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+  Line 4:18:    'ITerminalOptions' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+  Line 6:10:    'AttachAddon' is defined but never used                                                                             @typescript-eslint/no-unused-vars
+  Line 120:38:  Array.prototype.map() expects a return value from arrow function                                                    array-callback-return
+  Line 143:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 144:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 145:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:47:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 162:6:   React Hook useEffect has a missing dependency: 'historyLineData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 164:9:   'output' is assigned a value but never used                                                                         @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/TEST/createPath.tsx
+  Line 18:13:  'name' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/api/index.ts
+  Line 5:3:  'IFolderTree' is defined but never used           @typescript-eslint/no-unused-vars
+  Line 6:3:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/getFilePath/index.tsx
+  Line 2:8:   'React' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 2:17:  'useEffect' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 3:8:   'molecule' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 4:10:  'Float' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 4:17:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 5:10:  'transformToEditorTab' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/action/keybindingAction.ts
+  Line 6:8:  'api' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 7:8:  'GetFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/exampleController.tsx
+  Line 1:8:  'molecule' is defined but never used      @typescript-eslint/no-unused-vars
+  Line 4:3:  'IEditorTab' is defined but never used    @typescript-eslint/no-unused-vars
+  Line 5:3:  'ISidebarPane' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 6:3:  'IMenuBarItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/index.tsx
+  Line 8:3:  'createDataSourceMenuItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/running/index.ts
+  Line 7:10:  'useFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 9:10:  'toast' is defined but never used           @typescript-eslint/no-unused-vars
+
+src/extensions/userFolders/folderTreeController.ts
+  Line 11:10:  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/blockchainSidePane.tsx
+  Line 16:8:  'UserFolderName' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/terminal/terminalPanelView.tsx
+  Line 2:53:    'useState' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  Line 4:10:    'ITheme' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+  Line 4:18:    'ITerminalOptions' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+  Line 6:10:    'AttachAddon' is defined but never used                                                                             @typescript-eslint/no-unused-vars
+  Line 120:38:  Array.prototype.map() expects a return value from arrow function                                                    array-callback-return
+  Line 143:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 144:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 145:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:47:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 162:6:   React Hook useEffect has a missing dependency: 'historyLineData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 164:9:   'output' is assigned a value but never used                                                                         @typescript-eslint/no-unused-vars
+
+webpack compiled with 1 warning
+No issues found.
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src/TEST/createPath.tsx
+  Line 18:13:  'name' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/api/index.ts
+  Line 5:3:  'IFolderTree' is defined but never used           @typescript-eslint/no-unused-vars
+  Line 6:3:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/getFilePath/index.tsx
+  Line 2:8:   'React' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 2:17:  'useEffect' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 3:8:   'molecule' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 4:10:  'Float' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 4:17:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 5:10:  'transformToEditorTab' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/action/keybindingAction.ts
+  Line 6:8:  'api' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 7:8:  'GetFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/exampleController.tsx
+  Line 1:8:  'molecule' is defined but never used      @typescript-eslint/no-unused-vars
+  Line 4:3:  'IEditorTab' is defined but never used    @typescript-eslint/no-unused-vars
+  Line 5:3:  'ISidebarPane' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 6:3:  'IMenuBarItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/index.tsx
+  Line 8:3:  'createDataSourceMenuItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/running/index.ts
+  Line 7:10:  'useFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 9:10:  'toast' is defined but never used           @typescript-eslint/no-unused-vars
+
+src/extensions/userFolders/folderTreeController.ts
+  Line 11:10:  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/blockchainSidePane.tsx
+  Line 16:8:  'UserFolderName' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/terminal/terminalPanelView.tsx
+  Line 2:53:    'useState' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  Line 4:10:    'ITheme' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+  Line 4:18:    'ITerminalOptions' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+  Line 6:10:    'AttachAddon' is defined but never used                                                                             @typescript-eslint/no-unused-vars
+  Line 120:38:  Array.prototype.map() expects a return value from arrow function                                                    array-callback-return
+  Line 143:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 144:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 145:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:47:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 162:6:   React Hook useEffect has a missing dependency: 'historyLineData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 164:9:   'output' is assigned a value but never used                                                                         @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/TEST/createPath.tsx
+  Line 18:13:  'name' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+src/api/index.ts
+  Line 5:3:  'IFolderTree' is defined but never used           @typescript-eslint/no-unused-vars
+  Line 6:3:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/components/getFilePath/index.tsx
+  Line 2:8:   'React' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 2:17:  'useEffect' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 3:8:   'molecule' is defined but never used              @typescript-eslint/no-unused-vars
+  Line 4:10:  'Float' is defined but never used                 @typescript-eslint/no-unused-vars
+  Line 4:17:  'IFolderTreeNodeProps' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 5:10:  'transformToEditorTab' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/action/keybindingAction.ts
+  Line 6:8:  'api' is defined but never used             @typescript-eslint/no-unused-vars
+  Line 7:8:  'GetFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/exampleController.tsx
+  Line 1:8:  'molecule' is defined but never used      @typescript-eslint/no-unused-vars
+  Line 4:3:  'IEditorTab' is defined but never used    @typescript-eslint/no-unused-vars
+  Line 5:3:  'ISidebarPane' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 6:3:  'IMenuBarItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/examples/index.tsx
+  Line 8:3:  'createDataSourceMenuItem' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/extensions/running/index.ts
+  Line 7:10:  'useFileContent' is defined but never used  @typescript-eslint/no-unused-vars
+  Line 9:10:  'toast' is defined but never used           @typescript-eslint/no-unused-vars
+
+src/extensions/userFolders/folderTreeController.ts
+  Line 11:10:  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/blockchainSidePane.tsx
+  Line 16:8:  'UserFolderName' is defined but never used  @typescript-eslint/no-unused-vars
+
+src/views/terminal/terminalPanelView.tsx
+  Line 2:53:    'useState' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  Line 4:10:    'ITheme' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+  Line 4:18:    'ITerminalOptions' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+  Line 6:10:    'AttachAddon' is defined but never used                                                                             @typescript-eslint/no-unused-vars
+  Line 120:38:  Array.prototype.map() expects a return value from arrow function                                                    array-callback-return
+  Line 143:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 144:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 145:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:29:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 146:47:  Unexpected string concatenation of literals                                                                         no-useless-concat
+  Line 162:6:   React Hook useEffect has a missing dependency: 'historyLineData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 164:9:   'output' is assigned a value but never used                                                                         @typescript-eslint/no-unused-vars
+
+webpack compiled with 1 warning
+No issues found.

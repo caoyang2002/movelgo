@@ -2,6 +2,18 @@ import path from 'path'
 import dotenv from 'dotenv'
 import os from 'os'
 
+import fs from 'fs'
+
+// 指定你的 .env 文件位置
+const envPath = '../.env'
+
+// 确保 .env 文件存在
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath })
+} else {
+  console.error('.env file not found')
+}
+
 export const HOST_IP = () => {
   try {
     dotenv.config({ path: path.resolve(process.cwd(), '../.env') })
@@ -19,7 +31,7 @@ export const HOST_IP = () => {
     }
   }
   const ipAddress = addresses.length > 0 ? addresses[0] : 'localhost'
-  console.log('[INFO] ip address: ', ipAddress)
+  console.log('[INFO](port.tsx) HOST IP: ', ipAddress)
   return ipAddress
 }
 
@@ -41,10 +53,10 @@ export const RPC_PORT = () => {
   return port
 }
 export const CORS_HOST_IP = () => {
-  const cors = process.env.REACT_APP_CORS_IP || [
-    'http://0.0.0.0:3000',
-    'http://0.0.0.0:3010',
-  ]
+  console.log('[INFO] cors host ip: ', process.env.REACT_APP_CORS_IP)
+  const cors = process.env.REACT_APP_CORS_IP
+    ? process.env.REACT_APP_CORS_IP.split(',')
+    : ['http://0.0.0.0:3000', 'http://0.0.0.0:3010']
   console.log('[INFO](user-files.tsx) cors: ', cors)
   return cors
 }

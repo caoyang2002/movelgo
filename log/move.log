@@ -1,0 +1,3 @@
+thread 'main' panicked at third_party/move/tools/move-cli/src/base/test.rs:228:18:
+called `Result::unwrap()` on an `Err` value: No such file or directory '/Users/simons/Documents/GitHub/movelgo/rpc/move/sources'
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

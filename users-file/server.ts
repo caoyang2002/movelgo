@@ -18,9 +18,13 @@ app.use(express.json())
 
 // 设置允许跨域请求的选项
 const corsOptions = {
-  origin: `${CORS_HOST_IP()}`, // 允许的请求来源
+  origin: CORS_HOST_IP(), // 允许的请求来源
   credentials: true, // 允许携带认证信息（如cookies）
 }
+console.log('[INFO](server.ts) CORS:', CORS_HOST_IP())
+console.log('[INFO](server.ts) HOST_IP:', HOST_IP())
+console.log('[INFO](server.ts) REACT_APP_PORT:', REACT_APP_PORT())
+console.log('[INFO](server.ts) FILE_SERVER_PORT:', FILE_SERVER_PORT())
 
 // 解析请求体
 app.use(express.json())

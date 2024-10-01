@@ -135,7 +135,7 @@ async fn main() -> std::io::Result<()> {
    println!("[INFO] rpc port: {}", rpc_port);
     
 
-    let host_ip = env::var("REACT_APP_HOST_IP").unwrap_or_else(|_| "localhost".to_string());
+   let host_ip = env::var("REACT_APP_RPC_HOST_IP").unwrap_or_else(|_| "localhost".to_string());
     
     let rpc_address = format!("http://{}:{}", host_ip, rpc_port);
     println!("[INFO] rpc address: {}", rpc_address);

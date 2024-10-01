@@ -1,0 +1,21 @@
+warning: unused import: `dotenv::dotenv`
+ --> src/main.rs:7:5
+  |
+7 | use dotenv::dotenv;
+  |     ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: `server` (bin "server") generated 1 warning (run `cargo fix --bin "server"` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.55s
+     Running `target/debug/server`
+[INFO] env_path "/Users/simons/Documents/GitHub/movelgo/rpc/server/../../.env"
+[INFO] app port: 3000
+[INFO] file server port: 3010
+[INFO] rpc port: 3020
+[INFO] rpc address: http://192.168.5.192:3020
+[INFO] file server address: http://192.168.5.192:3010
+[INFO] react app address: http://192.168.5.192:3000
+[INFO] bind adress: 192.168.5.192:3020
+[INFO] rpc server start on http://192.168.5.192:3020
+Error: Os { code: 49, kind: AddrNotAvailable, message: "Can't assign requested address" }
