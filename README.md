@@ -20,6 +20,18 @@ Thank you for your reading, thank you again!
 
 # 🚀 Start
 
+- `.env` port and host configuration
+
+  ```env
+  # port
+  REACT_APP_PORT=3000
+  REACT_APP_RPC_PORT=3020
+  REACT_APP_FILE_SERVER_PORT=3010
+  # host
+  REACT_APP_HOST_IP=192.168.5.192
+  REACT_APP_CORS_IP=[http://192.168.5.192:3000,http://192.168.5.192:3020,http://192.168.5.192:3010]
+  ```
+
 - `./init.sh` Initialize the project
 
   > download Aptos CLI, Rust, TypeScript Node, Yarn, NVM, and install dependencies from `package.json`.
