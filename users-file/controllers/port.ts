@@ -40,3 +40,11 @@ export const RPC_PORT = () => {
   console.log('[INFO] rpc port: ', port)
   return port
 }
+export const CORS_HOST_IP = () => {
+  const cors = process.env.REACT_APP_CORS_IP || [
+    'http://0.0.0.0:3000',
+    'http://0.0.0.0:3010',
+  ]
+  console.log('[INFO](user-files.tsx) cors: ', cors)
+  return cors
+}

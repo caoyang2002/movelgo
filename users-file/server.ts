@@ -3,7 +3,12 @@ import router from './routers'
 import cors from 'cors'
 import path from 'path'
 import cookieParser from 'cookie-parser'
-import { HOST_IP, REACT_APP_PORT, FILE_SERVER_PORT } from './controllers/port'
+import {
+  HOST_IP,
+  REACT_APP_PORT,
+  FILE_SERVER_PORT,
+  CORS_HOST_IP,
+} from './controllers/port'
 
 const app = express()
 
@@ -13,7 +18,7 @@ app.use(express.json())
 
 // 设置允许跨域请求的选项
 const corsOptions = {
-  origin: `http://${HOST_IP()}:${REACT_APP_PORT()}`, // 允许的请求来源
+  origin: `${CORS_HOST_IP()}`, // 允许的请求来源
   credentials: true, // 允许携带认证信息（如cookies）
 }
 
